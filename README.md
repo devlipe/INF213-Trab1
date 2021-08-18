@@ -11,7 +11,9 @@
 <h2>Fontes de Consulta para o trabalho</h2>
 
 <ul>
-<li></li>
+<li>[C Plus Plus](https://www.cplusplus.com/reference)</li>
+<li>[Stack Overflow](https://stackoverflow.com/)</li>
+<li>[CPP Reference](https://en.cppreference.com)</li>
 
 </ul>
 
