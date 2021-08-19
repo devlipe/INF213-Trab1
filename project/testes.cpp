@@ -1,5 +1,10 @@
-#include <iostream>
+
 #include <string>
+#include <iostream>
+#include <cassert>
+#include <fstream>
+#include <iomanip>
+#include <sstream>
 
 // int main()
 // {
@@ -23,11 +28,80 @@
 //     std::cout << a;
 // }
 
-int main(){
-    std::string indice = "10:11";
-    int i = indice.find(":");
-    unsigned int divisor = stoi(indice.substr(i+1));
-    unsigned int multiplicador = stoi(indice.substr(0,i));
-    
-    std:: cout << multiplicador << " " << divisor << "\n";
+void codeToGetTheData()
+{
+    std::string entrada;
+
+    std::getline(std::cin, entrada); // Pega a linha do arquivo
+
+    std::stringstream line;
+    line << entrada;
+
+    while (!line.eof())
+    {
+        std::string dadoDaClasse;
+        std::getline(line, dadoDaClasse, ',');
+    }
+    line.clear();
+
+    ///! Jeito do Salles
+    std::ifstream fin;
+    std::string linha;
+    while(std::getline(fin, linha)){
+        std::stringstream ss;
+        ss << linha;
+        for (int i = 0; i < linha.size(); i++) if (linha[i]==',') linha[i] == ' ';
+        ss << linha;
+        std::string ticker;
+        double p1,p2;
+        ss >> ticker >> p1 >> p2;
+    }
 }
+
+// void leLinha(std::string &linha, std::string *dados)
+// {
+//     std::stringstream line;
+//     for (int i = 0; i < linha.size(); i++)
+//     {
+//         linha[i] == ',' ? linha[i] = ' ' : linha[i];
+//     }
+//     line << linha;
+//     int i = 0;
+//     while (line >> dados[i])
+//     {
+//         i++;
+//     }
+// }
+
+
+// int main()
+// {
+//     std::string linha;
+
+//     getline(std::cin, linha);
+//     std::string dados[10] = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
+
+//     //leLinha(linha, dados);
+
+//     for (int i = 0; i < 10; i++)
+//     {
+//         std::cout << dados[i] << std::endl;
+//     }
+
+//     // while (dados)
+//     // {
+//     //     std::cout << *dados;
+//     //     dados + 1;
+//     // }
+// }
+
+int main(){
+    char c[2];
+    char r;
+    
+    std::cin >> c >> r;
+
+    std::cout << c << " " << r << std::endl;
+    return 0;
+}
+

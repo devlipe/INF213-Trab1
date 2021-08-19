@@ -17,4 +17,9 @@ public:
     
     ///Retorna um valor em centavos (unsigned int)
     unsigned int getPrecoDoDia() const;
+    
+    //*Funcoes de uso do Programa
+
+    void realizaLeitura(std::ifstream &arquivoFonte, Cotacao * arrayCotacao) const;
+
 };

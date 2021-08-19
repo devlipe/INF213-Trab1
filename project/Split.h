@@ -18,4 +18,8 @@ public:
     unsigned int getMultiplicador() const;
     //Divisor do split (segundo numero da razao)
     unsigned int getDivisor() const;
+
+    //*Funcoes de uso do Programa
+    void realizaLeitura(std::ifstream &arquivoFonte, Split * arraySplit) const;
+
 };

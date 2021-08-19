@@ -3,6 +3,8 @@
 #pragma once
 
 #include <string>
+#include <sstream>
+#include <fstream>
 
 class Dado
 {
@@ -22,4 +24,9 @@ public:
     std::string getDateString() const;
     ///Retorna o ticker da empresa
     std::string getTicker() const;
+
+    //* Funcoes de uso do programa
+
+    //Faz a leitura dos dados e retorna um ponteiro para um grupo de stirngs
+    void parsingLinha( std::string &linhaFonte, std::string * dados) const;
 };

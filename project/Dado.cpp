@@ -10,9 +10,10 @@ Dado::Dado(const std::string ticker, std::string data)
 }
 
 Dado::~Dado()
-{}
+{
+}
 
-unsigned int Dado::getDateInt()const {return date;}
+unsigned int Dado::getDateInt() const { return date; }
 
 std::string Dado::getDateString() const
 {
@@ -24,7 +25,22 @@ std::string Dado::getDateString() const
     return dateString;
 }
 
-std::string Dado::getTicker() const 
+std::string Dado::getTicker() const
 {
     return ticker;
+}
+void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const
+{
+    std::stringstream line;
+    for (int i = 0; i < linhaFonte.size(); i++)
+    {
+        linhaFonte[i] == ',' ? linhaFonte[i] = ' ' : linhaFonte[i];
+    }
+    line << linhaFonte;
+    int i = 0;
+    while (line >> dados[i])
+    {
+        i++;
+    }
+    return;
 }

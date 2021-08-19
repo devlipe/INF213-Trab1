@@ -27,6 +27,19 @@ void codeToGetTheData()
         std::getline(line, dadoDaClasse, ',');
     }
     line.clear();
+
+    ///! Jeito do Salles
+    std::ifstream fin;
+    std::string linha;
+    while(std::getline(fin, linha)){
+        std::stringstream ss;
+        ss << linha;
+        for (int i = 0; i < linha.size(); i++) if (linha[i]==',') linha[i] == ' ';
+        ss << linha;
+        std::string ticker;
+        double p1,p2;
+        ss >> ticker >> p1 >> p2;
+    }
 }
 
 int main(int argc, char const *argv[])

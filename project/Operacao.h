@@ -20,4 +20,9 @@ public:
     char getTipoOp() const;
     ///Retorna a quantidade de acoes que a operacao trabalha, operacoes do tipo Q, retornam 0
     unsigned int getQuantOpe() const;
+
+    //*Funcoes de uso do Programa
+    ///Realiza a leitura das operacoes e retorna a expecificacao de execucao ((D,Q,M,F)R)
+    char * realizaLeitura(std::ifstream &arquivoFonte, Operacao * arrayOperacao) const;
+
 };
