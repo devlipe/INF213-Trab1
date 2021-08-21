@@ -11,6 +11,7 @@ private:
 public:
     //* Construtor e Destrutor
     Dividendo(std::string ticker, std::string date, double valor);
+    Dividendo();
     ~Dividendo();
 
     //* Getters and Setters
@@ -20,5 +21,7 @@ public:
 
     //*Funcoes de uso do Programa
     ///Realiza a leitura de um arquivo de dividendos e os coloca em um vetor;
-    void realizaLeitura(std::ifstream &arquivoFonte, Dividendo * arrayDividendo) const;
+    unsigned int realizaLeitura(std::ifstream &arquivoFonte, Dividendo *arrayDividendo) const;
+    ///Faz o print das informacoes de um dividendo (Junto com o print do dado)
+    void printInfo() const override;
 };

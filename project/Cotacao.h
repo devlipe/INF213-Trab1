@@ -11,6 +11,7 @@ private:
 public:
     //* Construtor e Destrutor
     Cotacao(std::string ticker, std::string data, double valor);
+    Cotacao();
     ~Cotacao();
 
     //* Getters and Setters
@@ -20,6 +21,8 @@ public:
     
     //*Funcoes de uso do Programa
 
-    void realizaLeitura(std::ifstream &arquivoFonte, Cotacao * arrayCotacao) const;
-
+    ///Funcao para realizar a leitura do  arquivo de cotacoes
+    unsigned int realizaLeitura(std::ifstream &arquivoFonte, Cotacao * arrayCotacao) const;
+    ///Faz o print das informacoes de uma cotacao (Junto com o print do dado)
+    void printInfo() const override;
 };

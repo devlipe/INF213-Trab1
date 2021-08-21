@@ -16,11 +16,17 @@ Split::Split(std::string ticker, std::string data, std::string indice)
     }
 }
 
+Split::Split() : Dado()
+{
+    multiplicador = 0;
+    divisor = 0;
+}
+
 Split::~Split()
 {
 }
 
-void Split::realizaLeitura(std::ifstream &arquivoFonte, Split *arraySplit) const
+unsigned int Split::realizaLeitura(std::ifstream &arquivoFonte, Split *arraySplit) const
 {
     std::string linha;
     std::string dados[10] = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
@@ -32,6 +38,11 @@ void Split::realizaLeitura(std::ifstream &arquivoFonte, Split *arraySplit) const
         arraySplit[i] = Split(dados[0], dados[1], dados[2]);
         i++;
     }
-    //TODO: Parei aqui, implementacao da leitura dos dados
-    return;
+    return i;
+}
+
+void Split::printInfo() const
+{
+    Dado::printInfo();
+    std::cout << "Indice: " << multiplicador << ":" << divisor << "\n";
 }

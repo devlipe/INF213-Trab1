@@ -9,6 +9,12 @@ Dado::Dado(const std::string ticker, std::string data)
     this->date = stoi(data);
 }
 
+Dado::Dado()
+{
+    date = 0;
+    ticker = "";
+}
+
 Dado::~Dado()
 {
 }
@@ -43,4 +49,10 @@ void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const
         i++;
     }
     return;
+}
+
+void Dado::printInfo() const 
+{
+    std::cout<< "Ticker: " << this->ticker << "\n";
+    std::cout<< "Data: " << this->getDateString() << "\n";
 }

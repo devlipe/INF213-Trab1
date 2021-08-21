@@ -1,16 +1,17 @@
 #pragma once
 
 #include "Dado.h"
-#include "iostream"
 
 class Split : public Dado
 {
 private:
     unsigned int multiplicador;
     unsigned int divisor;
+
 public:
     //* Construtor e Destrutor
     Split(std::string ticker, std::string data, std::string indice);
+    Split();
     ~Split();
 
     //* Getters e Setters
@@ -20,6 +21,9 @@ public:
     unsigned int getDivisor() const;
 
     //*Funcoes de uso do Programa
-    void realizaLeitura(std::ifstream &arquivoFonte, Split * arraySplit) const;
 
+    ///Realiza a leitura do arquvio CSV
+    unsigned int realizaLeitura(std::ifstream &arquivoFonte, Split *arraySplit) const;
+    ///Faz o print das informacoes de um split (Junto com o print do dado)
+    void printInfo() const override;
 };
