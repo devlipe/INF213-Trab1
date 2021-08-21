@@ -24,7 +24,8 @@ int main(int argc, char const *argv[])
     }
 
     Bolsa::leArquivos(argv);
-    //Bolsa::printDataBase();
+    Bolsa::organizaCotacoes();
+    Bolsa::printDataBase();
 
     return 0;
 }

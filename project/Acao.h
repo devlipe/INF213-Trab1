@@ -12,8 +12,10 @@ private:
     unsigned int precoDeCompra;
     unsigned int custoTotal;
     unsigned int custoMedio;
-    unsigned int dividendosPagosNoMes;
-    int lucroOperacaoNoMes;
+    unsigned int dividendosMes;
+    unsigned int dividendosTotais;
+    int lucroOperacoesMes;
+    int lucroOperacoesTotais;
 
 public:
     //* Construtor e Destrutor
@@ -28,15 +30,20 @@ public:
     unsigned int getPrecoDeCompra() const;
     unsigned int getCustoTotal() const;
     unsigned int getCustoMedio() const;
-    unsigned int getDividendosPagos() const;
-    int getlucroOperacoes() const;
+    unsigned int getDividendosMes() const;
+    unsigned int getDividendosTotais() const;
+    int getOperacoesMes() const;
+    int getOperacoesTotais() const;
 
-    void setQuantidadeAtual(int quantidade);
-    void setPrecoDeCompra(unsigned int preco);
-    void setCustoTotal(unsigned int custoTot);
-    void setCustoMedio(unsigned int custoMed);
-    void setDividendosPagos(unsigned int divdendos);
-    void setLucroOperacao(int lucroOp);
+
+    void setQuantidadeAtual(int &quantidade);
+    void setPrecoDeCompra(unsigned int &preco);
+    void setCustoTotal(unsigned int &custoTot);
+    void setCustoMedio(unsigned int &custoMed);
+    void setDividendosMes(unsigned int &divdendosM);
+    void setDividendosTotais(unsigned int &dividendosT);
+    void setOperacoesMes(int &lucroOpM);
+    void setOperacoesTotais(int &lucroOpT);
 
     //*Funcoes de uso do Programa
 };

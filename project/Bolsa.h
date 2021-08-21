@@ -5,11 +5,11 @@
 #include "Split.h"
 #include "Operacao.h"
 #include "Carteira.h"
+#include "Ordenacao.h"
 class Bolsa
 {
 private:
     //TODO: Na funcao de printDetalhado, ela deve zerar os atributos Dividendos e lucroOperacao, toda as vezes que for chamada (Todo Mes);
-    //TODO: Implementar a classe com os vetores dos dados e a carteira
 
 
 
@@ -35,10 +35,9 @@ private:
     void leOperacoes(const char *operacoesPath);
 
     //* Funcoes de uso do Programa
-    ///Funcao que a partir dos argumentos passados para a main realiza a leitura dos dados
     void leArquivosImp(const char **files);
-    ///Funcao para imprimir todas as informacoes do banco de dados e verificar se os arquivos foram corretamente lidos
-    void printDataBaseImp();
+    void printDataBaseImp() const;
+    void organizaCotacoesImp();
 
 
 public:
@@ -56,6 +55,10 @@ public:
     void operator=(Bolsa const &) = delete;
 
     //* Funcoes para facilitar o uso das funcoes do programa
+    ///Funcao que a partir dos argumentos passados para a main realiza a leitura dos dados
     static void leArquivos(const char **files);
+    ///Funcao para imprimir todas as informacoes do banco de dados e verificar se os arquivos foram corretamente lidos
     static void printDataBase();
+    ///Funacao para organizar as cotacoes em ordem crescente de data
+    static void organizaCotacoes();
 };

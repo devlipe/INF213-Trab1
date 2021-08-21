@@ -73,7 +73,7 @@ void Bolsa::leArquivos(const char **files)
     return getInstance().leArquivosImp(files);
 }
 
-void Bolsa::printDataBaseImp()
+void Bolsa::printDataBaseImp() const
 {
     std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
 
@@ -113,4 +113,14 @@ void Bolsa::printDataBaseImp()
 void Bolsa::printDataBase()
 {
     return getInstance().printDataBaseImp();
+}
+
+void Bolsa::organizaCotacoesImp()
+{
+    ordenacao::quickSort(cotacoes, nCotacoes);
+}
+
+void Bolsa::organizaCotacoes()
+{
+    return getInstance().organizaCotacoesImp();
 }

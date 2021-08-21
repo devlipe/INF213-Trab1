@@ -2,6 +2,7 @@
 
 Carteira::Carteira()
 {
+    nAcao = 0;
 }
 
 Carteira::~Carteira()
