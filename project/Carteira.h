@@ -9,6 +9,13 @@ class Carteira
 private:
     Acao acao[100];
     unsigned int nAcao;
+    int valorAtual; //Patrimonio
+    unsigned int custoDeCompraT;
+    int valorizacao; // ValorAtual - CustoDeCompra;
+    int lucroOperacoes;
+    int lucroDividendos;
+    int rentabilidadeTotal; /// Valorizacao + lucroOperacoes + lucroDividendos
+
 public:
 
     //* Construtor e Destrutor

@@ -76,39 +76,47 @@ void Bolsa::leArquivos(const char **files)
 //TODO: Remover antes de entregar o trabalho (usado somente para debugger)
 void Bolsa::printDataBaseImp() const
 {
-    std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
+    std::cout << nEventos;
 
-    std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
-    for (int i = 0; i < nCotacoes; i++)
+    for (int i = 0; i < nEventos; i++)
     {
-        historicoCotacoes[i].printInfo();
-        std::cout << "\n";
+        listaEventos[i].printInfo();
+        std::cout << std::endl;
     }
-    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
-    for (int i = 0; i < nDividendos; i++)
-    {
-        historicoDividendos[i].printInfo();
-        std::cout << "\n";
-    }
-    std::cout << std::setfill('=') << std::setw(30) << "\n";
+    // std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
 
-    std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
-    for (int i = 0; i < nOperacoes; i++)
-    {
-        listaOperacoes[i].printInfo();
-        std::cout << "\n";
-    }
-    std::cout << std::setfill('=') << std::setw(30) << "\n";
+    // std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
+    // for (int i = 0; i < nCotacoes; i++)
+    // {
+    //     historicoCotacoes[i].printInfo();
+    //     std::cout << "\n";
+    // }
+    // std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
-    for (int i = 0; i < nSplits; i++)
-    {
-        historicoSplits[i].printInfo();
-        std::cout << "\n";
-    }
-    std::cout << std::setfill('=') << std::setw(30) << "\n";
+    // std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
+    // for (int i = 0; i < nDividendos; i++)
+    // {
+    //     historicoDividendos[i].printInfo();
+    //     std::cout << "\n";
+    // }
+    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    // std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
+    // for (int i = 0; i < nOperacoes; i++)
+    // {
+    //     listaOperacoes[i].printInfo();
+    //     std::cout << "\n";
+    // }
+    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    // std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
+    // for (int i = 0; i < nSplits; i++)
+    // {
+    //     historicoSplits[i].printInfo();
+    //     std::cout << "\n";
+    // }
+    // std::cout << std::setfill('=') << std::setw(30) << "\n";
 }
 
 void Bolsa::printDataBase()
@@ -119,6 +127,7 @@ void Bolsa::printDataBase()
 void Bolsa::organizaDataBaseImp()
 {
     algoritmos::quickSortDadoDataCres(historicoCotacoes, nCotacoes);
+    //algoritmos::mergeSortDadoDataCres(historicoCotacoes, nCotacoes);
 
     ///algoritmos::quickSortDadoDataCres(historicoDividendos, nDividendos);
     //algoritmos::quickSortDadoDataCres(historicoSplits, nSplits);
@@ -133,10 +142,54 @@ void Bolsa::executaComandoQ() const
 {
     for (int i = 0; i < nOperacoes; i++)
     {
-        int posicaoArray = algoritmos::buscaBinariaDado(historicoCotacoes, listaOperacoes[i], nCotacoes);
+        int posicaoArray = algoritmos::buscaBinariaDadoDataNome(historicoCotacoes, listaOperacoes[i], nCotacoes);
         std::cout << historicoCotacoes[posicaoArray].getPrecoDoDia() << std::endl;
     }
-    
+}
+
+void Bolsa::adicionaOperacoesAosEventos(unsigned int &nEventos)
+{
+    for (int i = 0; i < nOperacoes; i++)
+    {
+        listaEventos[nEventos] = Evento(listaOperacoes[i], i);
+        nEventos++;
+    }
+}
+
+void Bolsa::adicionaSplitsAosEventos(unsigned int &nEventos)
+{
+    for (int i = 0; i < nSplits; i++)
+    {
+        listaEventos[nEventos] = Evento(historicoSplits[i], i);
+        nEventos++;
+    }
+}
+
+void Bolsa::adicionaDividendosAosEventos(unsigned int &nEventos)
+{
+    for (int i = 0; i < nDividendos; i++)
+    {
+        listaEventos[nEventos] = Evento(historicoDividendos[i], i);
+        nEventos++;
+    }
+}
+
+void Bolsa::adicionaImpressoesAosEventos(unsigned int &nEventos)
+{
+}
+
+void Bolsa::montaVetorEventos()
+{
+    adicionaDividendosAosEventos(nEventos);
+    adicionaSplitsAosEventos(nEventos);
+    adicionaOperacoesAosEventos(nEventos);
+    adicionaImpressoesAosEventos(nEventos);
+    algoritmos::mergeSortDadoDataCres(listaEventos, nEventos);
+}
+
+void Bolsa::executaComandoM()
+{
+    montaVetorEventos();
 }
 
 void Bolsa::executaTrabalhoImp()
@@ -146,10 +199,10 @@ void Bolsa::executaTrabalhoImp()
     case 'Q':
         executaComandoQ();
         break;
-    case 'F':
-        /* code */
-        break;
     case 'M':
+        executaComandoM();
+        break;
+    case 'F':
         /* code */
         break;
     case 'D':

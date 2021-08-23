@@ -17,6 +17,7 @@ private:
 public:
     //* Construtore e destrutores
     Dado(const std::string ticker, std::string data);
+    Dado(const std::string ticker, const unsigned int data);
     Dado();
     ~Dado();
 

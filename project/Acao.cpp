@@ -3,6 +3,15 @@
 
 Acao::Acao()
 {
+    ticker = "";
+    quantidadeAtual = 0;
+    precoDeCompra = 0;
+    custoTotal = 0;
+    custoMedio = 0;
+    dividendosMes = 0;
+    dividendosTotais = 0;
+    lucroOperacoesMes = 0;
+    lucroOperacoesTotais = 0;
 }
 
 Acao::~Acao()
@@ -54,7 +63,7 @@ int Acao::getOperacoesMes() const
     return lucroOperacoesMes;
 }
 
-int Acao::getOperacoesTotais() const 
+int Acao::getOperacoesTotais() const
 {
     return lucroOperacoesTotais;
 }
@@ -89,7 +98,7 @@ void Acao::setOperacoesMes(int &lucroOpM)
     lucroOperacoesMes = lucroOpM;
 }
 
-void Acao::setOperacoesTotais (int &lucroOpT)
+void Acao::setOperacoesTotais(int &lucroOpT)
 {
     lucroOperacoesTotais = lucroOpT;
 }

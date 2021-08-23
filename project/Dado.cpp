@@ -9,9 +9,17 @@ Dado::Dado(const std::string ticker, std::string data)
     this->date = stoi(data);
 }
 
+Dado::Dado(const std::string ticker, const unsigned int data)
+{
+    this->ticker = ticker;
+    this->date = data;
+}
+
 Dado::Dado()
 {
-    date = 0;
+    //Ciramos um dado com uma data que certamente ficaria no final de qualquer metodo de ordenacao
+    //Isso e preciso no caso do vetor de eventos, no qual os evetos "vazios" devem sempre ficar no final
+    date = 30000000;
     ticker = "";
 }
 

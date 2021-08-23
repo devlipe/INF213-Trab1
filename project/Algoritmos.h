@@ -1,3 +1,5 @@
+#include "Evento.h"
+
 /// Functor utilizado para comparar objetos do tipo Dado de acordo com a data de cada um
 class FunctorCompDadoDataMenor
 {
@@ -6,6 +8,16 @@ public:
     bool operator()(const T &dado1, const T2 &dado2) const
     {
         return dado1.getDateInt() < dado2.getDateInt();
+    }
+};
+
+class FunctorCompDadoDataMenorOuIgual
+{
+public:
+    template <class T, class T2>
+    bool operator()(const T &dado1, const T2 &dado2) const
+    {
+        return dado1.getDateInt() <= dado2.getDateInt();
     }
 };
 
@@ -25,20 +37,31 @@ public:
     template <class T, class T2>
     bool operator()(const T &dado1, const T2 &dado2) const
     {
-        return (int)dado1.getDateInt()== (int)dado2.getDateInt();
+        return dado1.getDateInt() == dado2.getDateInt();
     }
 };
 
-class FunctorCompDadoTicker
+class FunctorCompDadoTickerIgual
 {
 public:
     template <class T, class T2>
     bool operator()(const T &dado1, const T2 &dado2) const
     {
-        return !dado1.getTicker().compare(dado2.getTicker());
+        return (dado1.getTicker() == dado2.getTicker());
     }
 };
 
+//Functor para comparar os tipos de evento do menor para o maior (Dividendo, Split, Operacao, Impressao) nessa Ordem
+class FunctorCompEventoTipoMenor
+{
+public:
+    bool operator()(const Evento &dado1, const Evento &dado2) const
+    {
+        return dado1.getTipoEvento() <= dado2.getTipoEvento();
+    }
+};
+
+///Funcao auxiliar para o merge sort
 namespace algoritmos
 {
     ///!+++++++++++++++++++++++++++++++++++++++++++++++++++ QUICK SORT +++++++++++++++++++++++++++++++++++++++++++
@@ -114,7 +137,6 @@ namespace algoritmos
             quickSort(vetor, beg, pos, comparaDataMenor);
             quickSort(vetor, pos + 1, end, comparaDataMenor);
         }
-        
     }
 
     template <typename T>
@@ -127,7 +149,7 @@ namespace algoritmos
     ///!+++++++++++++++++++++++++++++++++++++++++++++++++++ BUSCA BINARIA +++++++++++++++++++++++++++++++++++++++++++
 
     template <typename T, typename T2, typename T3, typename T4>
-    int buscaSequencial(T *vetor, T2 chaveBusca, int meio, T3 compDataIgual, T4 compTicker)
+    int buscaSequencial(const T *vetor, const T2 &chaveBusca, const int &meio, const T3 &compDataIgual, const T4 &compTicker)
     {
         //Procuramos no subarray comecando do ponto em que a busca binaria encontrou um data que seja correta
         //Depois pesquisamos para tras desse ponto ate que a data fique menor, ou encontre o ticker que estamos precisando
@@ -151,8 +173,9 @@ namespace algoritmos
         return -1;
     }
 
+    ///Busca binaria por data 
     template <typename T, typename T2, typename T3, typename T4>
-    int buscaBinaria(T *vetor, T2 chaveBusca, int begin, int end, T3 compDataMenor, T4 compDataIgual)
+    int buscaBinaria(const T *vetor, const T2 &chaveBusca, const int &begin, const int &end, const T3 &compMenor, const T4 &compIgual)
     {
         int meio = (end - begin) / 2 + begin;
 
@@ -160,24 +183,92 @@ namespace algoritmos
         {
             return -1;
         }
-        if (compDataIgual(chaveBusca, vetor[meio])) //Se encontrarmos uma data que seja satizfatoria, podemos fazer uma busca sequencial, ja que em um mesmo dia, nao se tem dados de dais de 500 acoes, logo no pior caso, temos complexidade O(500)
+        if (compIgual(chaveBusca, vetor[meio])) //Se encontrarmos uma data que seja satizfatoria, podemos fazer uma busca sequencial, ja que em um mesmo dia, nao se tem dados de dais de 500 acoes, logo no pior caso, temos complexidade O(500)
         {
-            FunctorCompDadoTicker compTicker;
-            return buscaSequencial(vetor, chaveBusca, meio, compDataIgual, compTicker);
+            return meio;
         }
-        if (compDataMenor(chaveBusca, vetor[meio]))
+        if (compMenor(chaveBusca, vetor[meio]))
         {
-            return buscaBinaria(vetor, chaveBusca, begin, meio - 1, compDataMenor, compDataIgual);
+            return buscaBinaria(vetor, chaveBusca, begin, meio - 1, compMenor, compIgual);
         }
-        return buscaBinaria(vetor, chaveBusca, meio + 1, end, compDataMenor, compDataIgual);
+        return buscaBinaria(vetor, chaveBusca, meio + 1, end, compMenor, compIgual);
     }
 
     ///Fucao para buscar um Dado por nome e por data dentro de um array, retorna -1 se o elemento n for encontrado
     template <typename T, typename T2>
-    int buscaBinariaDado(T *vetor, T2 chaveBusca, unsigned int tamVetor)
+    int buscaBinariaDadoDataNome(const T *vetor, const T2 &chaveBusca, const unsigned int &tamVetor)
     {
         FunctorCompDadoDataMenor compDataMenor;
         FunctorCompDadoDataIgual compDataIgual;
-        return buscaBinaria(vetor, chaveBusca, 0, tamVetor, compDataMenor, compDataIgual);
+        int result = buscaBinaria(vetor, chaveBusca, 0, tamVetor, compDataMenor, compDataIgual);
+        FunctorCompDadoTickerIgual compTicker;
+        return buscaSequencial(vetor, chaveBusca, result, compDataIgual, compTicker);
+    }
+
+    ///!+++++++++++++++++++++++++++++++++++++++++++++++++++ MERGE SORT +++++++++++++++++++++++++++++++++++++++++++
+
+    template <typename T, typename T2>
+    void merge(T *vetor, const int &begin, const int &meio, const int &end, T *aux, T2 &comparador)
+    {
+        int tam = end - begin;
+        int i = begin; //cursor 1
+        int j = meio;  //cursor 2
+        int k = 0;     //cursor para aux
+        while (i < meio && j < end)
+        {
+            if (comparador(vetor[i], vetor[j]))
+            {
+                aux[k++] = vetor[i++];
+            }
+            else
+            {
+                aux[k++] = vetor[j++];
+            }
+        }
+        while (i < meio)
+        {
+            aux[k++] = vetor[i++];
+        }
+        while (j < end)
+        {
+            aux[k++] = vetor[j++];
+        }
+        for (k = 0; k < tam; k++)
+        {
+            vetor[begin + k] = aux[k];
+        }
+    }
+
+    template <typename T, typename T2>
+    void mergeSort(T *vetor, const int &end, T *aux, T2 &comparador)
+    {
+        // com um elemento, já está ordenado
+        for (int TamanhoBloco = 1; TamanhoBloco < end; TamanhoBloco *= 2)
+        {
+            for (int begin = 0; begin < end; begin += 2 * TamanhoBloco)
+            {
+                int meio = (begin + TamanhoBloco < end) ? begin + TamanhoBloco : end;
+                int finalBloco = (begin + 2 * TamanhoBloco < end) ? begin + 2 * TamanhoBloco : end;
+                merge(vetor, begin, meio, finalBloco, aux, comparador); //intercala
+            }
+        }
+    }
+
+    template <typename T>
+    void mergeSortEventoTipo(T *vetor, int size)
+    {
+        FunctorCompEventoTipoMenor compEventoMenor;
+        T *aux = new T[size];
+        mergeSort(vetor, size, aux, compEventoMenor);
+        delete[] aux;
+    }
+
+    template <typename T>
+    void mergeSortDadoDataCres(T *vetor, int size)
+    {
+        FunctorCompDadoDataMenorOuIgual comDataMenorIgual;
+        T *aux = new T[size];
+        mergeSort(vetor, size, aux, comDataMenorIgual);
+        delete[] aux;
     }
 }

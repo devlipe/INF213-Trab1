@@ -7,11 +7,12 @@
 #include "Operacao.h"
 #include "Carteira.h"
 #include "Algoritmos.h"
+#include "Evento.h"
 class Bolsa
 {
 private:
     //TODO: Na funcao de printDetalhado, ela deve zerar os atributos Dividendos e lucroOperacao, toda as vezes que for chamada (Todo Mes);
-    Bolsa() {}
+    Bolsa() { nEventos = 0;}
 
     char tipoExecucao[2];
 
@@ -23,6 +24,8 @@ private:
     unsigned int nOperacoes;
     Split historicoSplits[500000];
     unsigned int nSplits;
+    Evento listaEventos[1500000];
+    unsigned int nEventos;
     Carteira carteira;
 
     //* Fucoes de uso privado da Classe
@@ -32,13 +35,18 @@ private:
     void leDividendos(const char *dividendosPath);
     void leOperacoes(const char *operacoesPath);
     void executaComandoQ() const;
+    void executaComandoM();
+    void montaVetorEventos();
+    void adicionaOperacoesAosEventos(unsigned int &nEventos);
+    void adicionaSplitsAosEventos(unsigned int &nEventos);
+    void adicionaDividendosAosEventos(unsigned int &nEventos);
+    void adicionaImpressoesAosEventos(unsigned int &nEventos);
 
     //* Funcoes de uso do Programa
     void leArquivosImp(const char **files);
     void printDataBaseImp() const;
     void organizaDataBaseImp();
     void executaTrabalhoImp();
-
 
 public:
     //* Construtor e destrutor do Singleton

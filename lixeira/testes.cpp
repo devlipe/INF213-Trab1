@@ -96,9 +96,9 @@ void codeToGetTheData()
 // }
 
 int main(){
-    std::string a = "Felipe";
-    std::string b = "Felipe";
+    std::string a = "Aaaaaa";
+    std::string b = "Aaaaaa";
 
-    std::cout << !a.compare(b);
+    std::cout << (a <= b);
 }
 
