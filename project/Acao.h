@@ -1,5 +1,3 @@
-//TODO:  Acabar de Implementar a classe acao para guardar as informacoes dentro da classe carteira
-
 #pragma once
 
 #include <string>

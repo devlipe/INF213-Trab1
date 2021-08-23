@@ -31,11 +31,7 @@ public:
     //* Funcoes de uso do programa
 
     //Faz a leitura dos dados de cada linha
-    void parsingLinha( std::string &linhaFonte, std::string * dados) const;
-
-    //!Testar
-    //TODO: Criar um metodo print para as classes que herdam de Dado (Verificar se esta pegando os dados certos). Acredito que possa haver um override na funcao (recebe um argumento do tipo dado??) 
-    //!Testar
+    void parsingLinha(std::string &linhaFonte, std::string *dados) const;
     ///Faz o print das informacoes de um dado
     virtual void printInfo() const;
 };

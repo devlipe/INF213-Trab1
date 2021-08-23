@@ -14,7 +14,7 @@ void Bolsa::leCotacoes(const char *cotacoesPath)
         exit(1);
     }
     Cotacao cot;
-    nCotacoes = cot.realizaLeitura(cotacaoCSV, this->cotacoes);
+    nCotacoes = cot.realizaLeitura(cotacaoCSV, this->historicoCotacoes);
     cotacaoCSV.close();
 }
 
@@ -27,7 +27,7 @@ void Bolsa::leSplits(const char *splitsPath)
         exit(1);
     }
     Split sip;
-    nSplits = sip.realizaLeitura(splitsCSV, this->splits);
+    nSplits = sip.realizaLeitura(splitsCSV, this->historicoSplits);
     splitsCSV.close();
 }
 
@@ -40,7 +40,7 @@ void Bolsa::leDividendos(const char *dividendosPath)
         exit(1);
     }
     Dividendo div;
-    nDividendos = div.realizaLeitura(dividendosCSV, this->dividendos);
+    nDividendos = div.realizaLeitura(dividendosCSV, this->historicoDividendos);
     dividendosCSV.close();
 }
 
@@ -53,7 +53,7 @@ void Bolsa::leOperacoes(const char *operacoesPath)
         exit(1);
     }
     Operacao op;
-    nOperacoes = op.realizaLeitura(operacoesCSV, this->operacoes, this->tipoExecucao);
+    nOperacoes = op.realizaLeitura(operacoesCSV, this->listaOperacoes, this->tipoExecucao);
     operacoesCSV.close();
 }
 
@@ -73,6 +73,7 @@ void Bolsa::leArquivos(const char **files)
     return getInstance().leArquivosImp(files);
 }
 
+//TODO: Remover antes de entregar o trabalho (usado somente para debugger)
 void Bolsa::printDataBaseImp() const
 {
     std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
@@ -80,7 +81,7 @@ void Bolsa::printDataBaseImp() const
     std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
     for (int i = 0; i < nCotacoes; i++)
     {
-        cotacoes[i].printInfo();
+        historicoCotacoes[i].printInfo();
         std::cout << "\n";
     }
     std::cout << std::setfill('=') << std::setw(30) << "\n";
@@ -88,7 +89,7 @@ void Bolsa::printDataBaseImp() const
     std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
     for (int i = 0; i < nDividendos; i++)
     {
-        dividendos[i].printInfo();
+        historicoDividendos[i].printInfo();
         std::cout << "\n";
     }
     std::cout << std::setfill('=') << std::setw(30) << "\n";
@@ -96,7 +97,7 @@ void Bolsa::printDataBaseImp() const
     std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
     for (int i = 0; i < nOperacoes; i++)
     {
-        operacoes[i].printInfo();
+        listaOperacoes[i].printInfo();
         std::cout << "\n";
     }
     std::cout << std::setfill('=') << std::setw(30) << "\n";
@@ -104,7 +105,7 @@ void Bolsa::printDataBaseImp() const
     std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
     for (int i = 0; i < nSplits; i++)
     {
-        splits[i].printInfo();
+        historicoSplits[i].printInfo();
         std::cout << "\n";
     }
     std::cout << std::setfill('=') << std::setw(30) << "\n";
@@ -115,12 +116,52 @@ void Bolsa::printDataBase()
     return getInstance().printDataBaseImp();
 }
 
-void Bolsa::organizaCotacoesImp()
+void Bolsa::organizaDataBaseImp()
 {
-    ordenacao::quickSort(cotacoes, nCotacoes);
+    algoritmos::quickSortDadoDataCres(historicoCotacoes, nCotacoes);
+
+    ///algoritmos::quickSortDadoDataCres(historicoDividendos, nDividendos);
+    //algoritmos::quickSortDadoDataCres(historicoSplits, nSplits);
 }
 
-void Bolsa::organizaCotacoes()
+void Bolsa::organizaDataBase()
 {
-    return getInstance().organizaCotacoesImp();
+    return getInstance().organizaDataBaseImp();
+}
+
+void Bolsa::executaComandoQ() const
+{
+    for (int i = 0; i < nOperacoes; i++)
+    {
+        int posicaoArray = algoritmos::buscaBinariaDado(historicoCotacoes, listaOperacoes[i], nCotacoes);
+        std::cout << historicoCotacoes[posicaoArray].getPrecoDoDia() << std::endl;
+    }
+    
+}
+
+void Bolsa::executaTrabalhoImp()
+{
+    switch (tipoExecucao[0])
+    {
+    case 'Q':
+        executaComandoQ();
+        break;
+    case 'F':
+        /* code */
+        break;
+    case 'M':
+        /* code */
+        break;
+    case 'D':
+        /* code */
+        break;
+    default:
+        std::cerr << "Tipo de Execucao nao econtrado" << std::endl;
+        break;
+    }
+}
+
+void Bolsa::executaTrabalho()
+{
+    return getInstance().executaTrabalhoImp();
 }

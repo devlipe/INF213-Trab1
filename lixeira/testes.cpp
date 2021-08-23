@@ -96,12 +96,9 @@ void codeToGetTheData()
 // }
 
 int main(){
-    char c[2];
-    char r;
-    
-    std::cin >> c >> r;
+    std::string a = "Felipe";
+    std::string b = "Felipe";
 
-    std::cout << c << " " << r << std::endl;
-    return 0;
+    std::cout << !a.compare(b);
 }
 

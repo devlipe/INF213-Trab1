@@ -1,29 +1,27 @@
 #pragma once
 
+#include <cassert>
 #include "Dividendo.h"
 #include "Cotacao.h"
 #include "Split.h"
 #include "Operacao.h"
 #include "Carteira.h"
-#include "Ordenacao.h"
+#include "Algoritmos.h"
 class Bolsa
 {
 private:
     //TODO: Na funcao de printDetalhado, ela deve zerar os atributos Dividendos e lucroOperacao, toda as vezes que for chamada (Todo Mes);
-
-
-
     Bolsa() {}
 
     char tipoExecucao[2];
 
-    Cotacao cotacoes[500000];
+    Cotacao historicoCotacoes[500000];
     unsigned int nCotacoes;
-    Dividendo dividendos[500000];
+    Dividendo historicoDividendos[500000];
     unsigned int nDividendos;
-    Operacao operacoes[500000];
+    Operacao listaOperacoes[500000];
     unsigned int nOperacoes;
-    Split splits[500000];
+    Split historicoSplits[500000];
     unsigned int nSplits;
     Carteira carteira;
 
@@ -33,11 +31,13 @@ private:
     void leSplits(const char *splitsPath);
     void leDividendos(const char *dividendosPath);
     void leOperacoes(const char *operacoesPath);
+    void executaComandoQ() const;
 
     //* Funcoes de uso do Programa
     void leArquivosImp(const char **files);
     void printDataBaseImp() const;
-    void organizaCotacoesImp();
+    void organizaDataBaseImp();
+    void executaTrabalhoImp();
 
 
 public:
@@ -60,5 +60,7 @@ public:
     ///Funcao para imprimir todas as informacoes do banco de dados e verificar se os arquivos foram corretamente lidos
     static void printDataBase();
     ///Funacao para organizar as cotacoes em ordem crescente de data
-    static void organizaCotacoes();
+    static void organizaDataBase();
+    ///Funcao para executar o trabalho, independente do tipo de execucao
+    static void executaTrabalho();
 };
