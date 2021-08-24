@@ -73,50 +73,51 @@ void Bolsa::leArquivos(const char **files)
     return getInstance().leArquivosImp(files);
 }
 
-//TODO: Remover antes de entregar o trabalho (usado somente para debugger)
 void Bolsa::printDataBaseImp() const
 {
-    std::cout << nEventos;
+   
+
+    std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
+
+    std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
+    for (int i = 0; i < nCotacoes; i++)
+    {
+        historicoCotacoes[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
+    for (int i = 0; i < nDividendos; i++)
+    {
+        historicoDividendos[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
+    for (int i = 0; i < nOperacoes; i++)
+    {
+        listaOperacoes[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
+    for (int i = 0; i < nSplits; i++)
+    {
+        historicoSplits[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
+
+    std::cout <<"SAIDA EVENTOS"<< nEventos << std::endl;
 
     for (int i = 0; i < nEventos; i++)
     {
         listaEventos[i].printInfo();
         std::cout << std::endl;
     }
-
-    // std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
-
-    // std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
-    // for (int i = 0; i < nCotacoes; i++)
-    // {
-    //     historicoCotacoes[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
-
-    // std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
-    // for (int i = 0; i < nDividendos; i++)
-    // {
-    //     historicoDividendos[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
-
-    // std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
-    // for (int i = 0; i < nOperacoes; i++)
-    // {
-    //     listaOperacoes[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
-
-    // std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
-    // for (int i = 0; i < nSplits; i++)
-    // {
-    //     historicoSplits[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
 }
 
 void Bolsa::printDataBase()
@@ -176,20 +177,67 @@ void Bolsa::adicionaDividendosAosEventos(unsigned int &nEventos)
 
 void Bolsa::adicionaImpressoesAosEventos(unsigned int &nEventos)
 {
+    for (int i = 0; i < nCotacoes - 1; i++)
+    {
+        if (historicoCotacoes[i].getMesInt() != historicoCotacoes[i + 1].getMesInt())
+        {
+            listaEventos[nEventos] = Evento(historicoCotacoes[i].getDateInt());
+            nEventos++;
+        }
+    }
 }
 
 void Bolsa::montaVetorEventos()
-{
+{   
     adicionaDividendosAosEventos(nEventos);
+
     adicionaSplitsAosEventos(nEventos);
+
     adicionaOperacoesAosEventos(nEventos);
+    
     adicionaImpressoesAosEventos(nEventos);
+
     algoritmos::mergeSortDadoDataCres(listaEventos, nEventos);
+    
+}
+
+void Bolsa::impressaoTipoM(Evento &evento)
+{
+    std::cout << "Fechamento do mes (" << evento.getDateString() <<")\n";
+    std::cout << std::left << std::setw(50) <<"Lucro total do mes:" << std::right << std::setw(15) << carteira.getLucroDividendosMes()/100 << std::setw(15) << carteira.getLucroOperacoesMes()/100;
+}
+
+void Bolsa::simula(Evento &evento)
+{
+    if ()
+    {
+        /* code */
+    }
+    
+
+}
+
+void Bolsa::executaEventosM()
+{
+    for (int i = 0; i < nEventos; i++)
+    {
+        if (listaEventos[i].getTipoEvento() == 4)
+        {
+            impressaoTipoM(listaEventos[i]);
+        }
+        else{
+            simula(listaEventos[i]);
+        }
+        
+    }
+    
 }
 
 void Bolsa::executaComandoM()
 {
     montaVetorEventos();
+    executaEventosM();
+    
 }
 
 void Bolsa::executaTrabalhoImp()

@@ -5,7 +5,6 @@ Acao::Acao()
 {
     ticker = "";
     quantidadeAtual = 0;
-    precoDeCompra = 0;
     custoTotal = 0;
     custoMedio = 0;
     dividendosMes = 0;
@@ -31,11 +30,6 @@ int Acao::getQuantidadeAtual() const
     }
 
     return quantidadeAtual;
-}
-
-unsigned int Acao::getPrecoDeCompra() const
-{
-    return precoDeCompra;
 }
 
 unsigned int Acao::getCustoTotal() const
@@ -73,11 +67,6 @@ void Acao::setQuantidadeAtual(int &quantidade)
     quantidadeAtual = quantidade;
 }
 
-void Acao::setPrecoDeCompra(unsigned int &preco)
-{
-    precoDeCompra = preco;
-}
-
 void Acao::setCustoTotal(unsigned int &custoTot)
 {
     custoTotal = custoTot;
@@ -88,12 +77,12 @@ void Acao::setCustoMedio(unsigned int &custoMed)
     custoMedio = custoMedio;
 }
 
-void Acao::setDividendosMes(unsigned int &dividendosM)
+void Acao::setDividendosMes(unsigned int dividendosM)
 {
     dividendosMes = dividendosM;
 }
 
-void Acao::setOperacoesMes(int &lucroOpM)
+void Acao::setOperacoesMes(int lucroOpM)
 {
     lucroOperacoesMes = lucroOpM;
 }

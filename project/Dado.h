@@ -16,8 +16,8 @@ private:
 
 public:
     //* Construtore e destrutores
-    Dado(const std::string ticker, std::string data);
-    Dado(const std::string ticker, const unsigned int data);
+    Dado(const std::string &ticker, std::string &data);
+    Dado(const std::string &ticker, const unsigned int &data);
     Dado();
     ~Dado();
 
@@ -28,11 +28,13 @@ public:
     std::string getDateString() const;
     ///Retorna o ticker da empresa
     std::string getTicker() const;
-
+    ///Retorna o mes de cada tipo de dado
+    unsigned int getMesInt() const;
     //* Funcoes de uso do programa
 
     //Faz a leitura dos dados de cada linha
     void parsingLinha(std::string &linhaFonte, std::string *dados) const;
     ///Faz o print das informacoes de um dado
     virtual void printInfo() const;
+    
 };

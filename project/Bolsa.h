@@ -24,7 +24,7 @@ private:
     unsigned int nOperacoes;
     Split historicoSplits[500000];
     unsigned int nSplits;
-    Evento listaEventos[1500000];
+    Evento listaEventos[1500720]; /// Colocamos o as quantidades maximas (Operacoes + Splits + Dividendos + 60 anos em meses (Espaco para Eventos de Impressao))
     unsigned int nEventos;
     Carteira carteira;
 
@@ -41,6 +41,9 @@ private:
     void adicionaSplitsAosEventos(unsigned int &nEventos);
     void adicionaDividendosAosEventos(unsigned int &nEventos);
     void adicionaImpressoesAosEventos(unsigned int &nEventos);
+    void simula(Evento &evento);
+    void executaEventosM();
+    void impressaoTipoM(Evento &evento);
 
     //* Funcoes de uso do Programa
     void leArquivosImp(const char **files);

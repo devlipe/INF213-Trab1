@@ -47,13 +47,16 @@ void codeToGetTheData()
     ///! Jeito do Salles
     std::ifstream fin;
     std::string linha;
-    while(std::getline(fin, linha)){
+    while (std::getline(fin, linha))
+    {
         std::stringstream ss;
         ss << linha;
-        for (int i = 0; i < linha.size(); i++) if (linha[i]==',') linha[i] == ' ';
+        for (int i = 0; i < linha.size(); i++)
+            if (linha[i] == ',')
+                linha[i] == ' ';
         ss << linha;
         std::string ticker;
-        double p1,p2;
+        double p1, p2;
         ss >> ticker >> p1 >> p2;
     }
 }
@@ -72,7 +75,6 @@ void codeToGetTheData()
 //         i++;
 //     }
 // }
-
 
 // int main()
 // {
@@ -95,10 +97,12 @@ void codeToGetTheData()
 //     // }
 // }
 
-int main(){
-    std::string a = "Aaaaaa";
-    std::string b = "Aaaaaa";
-
-    std::cout << (a <= b);
+int main()
+{
+    int data = 20210824;
+    while (true)
+    {
+        std::cin >> data;
+        std::cout << std::left << std::setw(50) << "Lucro total do mes:" << std::right << std::setw(15) << data << std::setw(15) << data << std::endl;
+    }
 }
-

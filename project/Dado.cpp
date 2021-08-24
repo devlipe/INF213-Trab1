@@ -1,6 +1,6 @@
 #include "Dado.h"
 
-Dado::Dado(const std::string ticker, std::string data)
+Dado::Dado(const std::string &ticker, std::string &data)
 {
     this->ticker = ticker;
 
@@ -9,7 +9,7 @@ Dado::Dado(const std::string ticker, std::string data)
     this->date = stoi(data);
 }
 
-Dado::Dado(const std::string ticker, const unsigned int data)
+Dado::Dado(const std::string &ticker, const unsigned int &data)
 {
     this->ticker = ticker;
     this->date = data;
@@ -43,6 +43,15 @@ std::string Dado::getTicker() const
 {
     return ticker;
 }
+
+unsigned int Dado::getMesInt() const
+{
+    int aux = date;
+    unsigned int mes = (aux / 100) % 100; // a / 100 remove o dia da data, e o %100 remove ano e deixa apenas o mes
+
+    return mes;
+}
+
 void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const
 {
     std::stringstream line;
@@ -59,8 +68,8 @@ void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const
     return;
 }
 
-void Dado::printInfo() const 
+void Dado::printInfo() const
 {
-    std::cout<< "Ticker: " << this->ticker << "\n";
-    std::cout<< "Data: " << this->getDateString() << "\n";
+    std::cout << "Ticker: " << this->ticker << "\n";
+    std::cout << "Data: " << this->getDateString() << "\n";
 }

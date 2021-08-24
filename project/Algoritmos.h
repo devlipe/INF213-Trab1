@@ -61,7 +61,6 @@ public:
     }
 };
 
-///Funcao auxiliar para o merge sort
 namespace algoritmos
 {
     ///!+++++++++++++++++++++++++++++++++++++++++++++++++++ QUICK SORT +++++++++++++++++++++++++++++++++++++++++++
@@ -194,7 +193,7 @@ namespace algoritmos
         return buscaBinaria(vetor, chaveBusca, meio + 1, end, compMenor, compIgual);
     }
 
-    ///Fucao para buscar um Dado por nome e por data dentro de um array, retorna -1 se o elemento n for encontrado
+    ///Fucao para buscar um Dado por nome e por data dentro de um array, retorna -1 se o elemento n for encontrado, e retorna a posicao no array caso for encontrado
     template <typename T, typename T2>
     int buscaBinariaDadoDataNome(const T *vetor, const T2 &chaveBusca, const unsigned int &tamVetor)
     {

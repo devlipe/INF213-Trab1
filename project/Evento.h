@@ -12,12 +12,10 @@ private:
     unsigned int tipoEvento;
     //Indica a posicao no vetor de origem de cada evento, ira agilizar o acesso as informacoes
     //Por exemplo, uma cotacao estara em historicoCotacoes[posicaoVetor]
+    //A classe foi criada desse jeito para diminiuir o uso de memora, uma vez que um vetor de eventos sera excessivamente grande (lim. 1.500)    unsigned int posicaoVetor;
     unsigned int posicaoVetor;
-    ///Caso o evento guarde uma operacao, ira mostra C- compra ou V - venda, se estiver vazio, guardara 0;
-    char tipoOperacao;
 
 public:
-
     //* Construtores e Destrutores
 
     ///Construtor Default, coloca tipo de evento e posicao de vetor como 0;
@@ -28,16 +26,18 @@ public:
     Evento(const Split &split, const unsigned int &pVetor);
     ///Construtor que cria um eventeo com base em uma operacao
     Evento(const Operacao &ope, const unsigned int &pVetor);
-    ///Construtor para colocar um metodo de impressao do vetor eventos 
+    ///Construtor para colocar um metodo de impressao do vetor eventos
     Evento(const unsigned int &data);
     ~Evento();
 
     //* Getters and Setters
 
+    ///Retona o tipo de cada evento como unsigned int sendo {1:Dividendo, 2:Split, 3:Operacao, 4:Impressao}
     unsigned int getTipoEvento() const;
+    ///Retorna a posicao no vetor original de cada evento  //Por exemplo, uma cotacao estara em historicoCotacoes[posicaoVetor]
     unsigned int getPosicaoVetor() const;
-    char getTipoOperacao() const;
 
     //* Funcoes de uso do programa
+    ///Chama o printDefault da classe dado alem de imprimir as infomacoes da propria classe
     void printInfo() const override;
 };
