@@ -1,5 +1,6 @@
 #pragma once
 #include "Evento.h"
+#include "Acao.h"
 
 /// Functor utilizado para comparar objetos do tipo Dado de acordo com a data de cada um
 class FunctorCompDadoDataMenor
@@ -49,6 +50,42 @@ public:
     bool operator()(const T &dado1, const T2 &dado2) const
     {
         return (dado1.getTicker() == dado2.getTicker());
+    }
+};
+
+class FunctorCompAcoesLucTotMesDecres
+{
+public:
+    bool operator()(const Acao &dado1, const Acao &dado2) const
+    {
+        if (dado1.getLucroTotalMes() > dado2.getLucroTotalMes())
+        {
+            return true;
+        }
+        if (dado1.getLucroTotalMes() == dado2.getLucroTotalMes() && dado1.getTicker() < dado2.getTicker())
+        {
+            return true;
+        }
+
+        return false;
+    }
+};
+
+class FunctorCompAcoesLucTotGeralDecres
+{
+public:
+    bool operator()(const Acao &dado1, const Acao &dado2) const
+    {
+        if (dado1.getLucroTotalGeral() > dado2.getLucroTotalGeral())
+        {
+            return true;
+        }
+        if (dado1.getLucroTotalGeral() == dado2.getLucroTotalGeral() && dado1.getTicker() < dado2.getTicker())
+        {
+            return true;
+        }
+
+        return false;
     }
 };
 
@@ -151,7 +188,7 @@ namespace algoritmos
     template <typename T, typename T2, typename T3, typename T4>
     int buscaSequencial(const T *vetor, const T2 &chaveBusca, const int &meio, const T3 &compDataIgual, const T4 &compTicker)
     {
-        //Procuramos no subarray comecando do ponto em que a busca binaria encontrou um data que seja correta
+        //Procuramos no subarray comecando do ponto em que a busca binaria encontrou uma data que seja correta
         //Depois pesquisamos para tras desse ponto ate que a data fique menor, ou encontre o ticker que estamos precisando
         for (int i = meio; compDataIgual(chaveBusca, vetor[i]); i--)
         {
@@ -162,7 +199,7 @@ namespace algoritmos
         }
         //Caso o ticker nao seja encontrado para tras, pesquisamos para frente
         //Esse tipo de implementacao tem uma falha, sendo que caso o ticker procurado n esteja no vetor, ele acessara memoria indevida
-        //Entretanto, estamos assumindo que todas as consultas sao validas, por isso nao precisamos de fazer esse tipo de verificacao
+        //Entretanto, estamos assumindo que todas as consultas sao validas, por isso NAO precisamos de fazer esse tipo de verificacao
         for (int i = meio; compDataIgual(chaveBusca, vetor[i]); i++)
         {
             if (compTicker(chaveBusca, vetor[i]))
@@ -173,7 +210,7 @@ namespace algoritmos
         return -1;
     }
 
-    ///Busca binaria por data 
+    ///Busca binaria por data
     template <typename T, typename T2, typename T3, typename T4>
     int buscaBinaria(const T *vetor, const T2 &chaveBusca, const int &begin, const int &end, const T3 &compMenor, const T4 &compIgual)
     {
@@ -269,6 +306,24 @@ namespace algoritmos
         FunctorCompDadoDataMenorOuIgual comDataMenorIgual;
         T *aux = new T[size];
         mergeSort(vetor, size, aux, comDataMenorIgual);
+        delete[] aux;
+    }
+
+    template <typename T>
+    void mergeSortAcoesMes(T *vetor, int size)
+    {
+        T *aux = new T[size];
+        FunctorCompAcoesLucTotMesDecres AcoesLucMes;
+        mergeSort(vetor, size, aux, AcoesLucMes);
+        delete[] aux;
+    }
+
+    template <typename T>
+    void mergeSortAcoesGeral(T *vetor, int size)
+    {
+        T *aux = new T[size];
+        FunctorCompAcoesLucTotGeralDecres AcoesLucGeral;
+        mergeSort(vetor, size, aux, AcoesLucGeral);
         delete[] aux;
     }
 }

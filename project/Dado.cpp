@@ -53,10 +53,12 @@ unsigned int Dado::getMesInt() const
 }
 
 std::string Dado::getDateStringSallistica() const
-{   
-    
+{
+    std::string data = std::to_string(date / 10000);       ///adiciona o ano a data
+    data = data + "-" + std::to_string(getMesInt()) + "-"; ///adiciona o mes e os hifens a data
+    data = data + std::to_string(date % 100);              /// Adiciona o mes a data
 
-
+    return data;
 }
 
 void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const

@@ -74,19 +74,29 @@ int Acao::getOperacoesTotais() const
     return lucroOperacoesTotais;
 }
 
-void Acao::setQuantidadeAtual(int &quantidade)
+int Acao::getLucroTotalMes() const
+{
+    return dividendosMes + lucroOperacoesMes;
+}
+
+int Acao::getLucroTotalGeral() const
+{
+    return dividendosTotais + lucroOperacoesTotais;
+}
+
+void Acao::setQuantidadeAtual(int quantidade)
 {
     quantidadeAtual = quantidade;
 }
 
-void Acao::setCustoTotal(unsigned int &custoTot)
+void Acao::setCustoTotal(unsigned int custoTot)
 {
     custoTotal = custoTot;
 }
 
-void Acao::setCustoMedio(unsigned int &custoMed)
+void Acao::setCustoMedio(unsigned int custoMed)
 {
-    custoMedio = custoMedio;
+    custoMedio = custoMed;
 }
 
 void Acao::setDividendosMes(unsigned int dividendosM)
@@ -107,6 +117,11 @@ void Acao::setOperacoesMes(int lucroOpM)
 void Acao::setOperacoesTotais(int lucroOpT)
 {
     lucroOperacoesTotais = lucroOpT;
+}
+
+void Acao::setValorAtual(int valorAtt)
+{
+    valorAtual = valorAtt;
 }
 
 void Acao::printInfo() const

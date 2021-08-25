@@ -33,7 +33,7 @@ unsigned int Cotacao::realizaLeitura(std::ifstream &arquivoFonte, Cotacao *array
         arrayCotacao[i] = Cotacao(dados[0], dados[1], stod(dados[5]));
         i++;
     }
-    return i ;
+    return i;
 }
 
 void Cotacao::printInfo() const

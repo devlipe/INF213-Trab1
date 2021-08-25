@@ -96,6 +96,41 @@
 //     //     dados + 1;
 //     // }
 // }
+//    std::cout << acoes[posAcao].getCustoTotal() << " Custo Total COMPRA " << acoes[posAcao].getTicker() << std::endl;
+// void Carteira::insert(const std::string &elem, const int pos)
+// {
+//     if (pos > 110 || pos < 0) //Limites do array de acoes
+//     {
+//         throw("Tentativa de inserir acao em posicao indevida");
+//     }
+
+//     for (int i = nAcoes; i > pos; i--)
+//     {
+//         acoes[i] = acoes[i - 1];
+//     }
+//     acoes[pos] = Acao(elem);
+//     nAcoes++;
+// }
+
+// //  if (nAcoes > 0)
+// //     {
+// //         for (int i = 0; i < nAcoes; i++)
+// //         {
+// //             if (ticker <= acoes[i].getTicker())
+// //             {
+// //                 insert(ticker, i);
+// //                 return i;
+// //             }
+// //         }
+// //     }
+// //     else
+// //     {
+// //         insert(ticker, 0);
+// //         return 0;
+// //     }
+// //     insert(ticker, nAcoes);
+// //     return nAcoes - 1;
+
 int nAcoes = 0;
 int acoes[110];
 void insert(const int &elem, const int pos)
@@ -140,14 +175,20 @@ int insereAcaoAlfa(const int &elem)
 int main()
 {
     int data = 20210824;
-    while (true)
+    // while (true)
+    // {
+    //     std::cin >> data;
+    //     std::cout << insereAcao(data) << " inserido nessa pos\n";
+    //     for (int i = 0; i < 200; i++)
+    //     {
+    //         std::cout << acoes[i] << " ";
+    //     }
+    //     std::cout << "\n";
+    // }
+    std::string v[10];
+
+    for (int i = 0; i < 150; i++)
     {
-        std::cin >> data;
-        std::cout << insereAcaoAlfa(data) << " inserido nessa pos\n";
-        for (int i = 0; i < nAcoes; i++)
-        {
-            std::cout << acoes[i] << " ";
-        }
-        std::cout << "\n";
+        std::cout << v[i] << std::endl;
     }
 }

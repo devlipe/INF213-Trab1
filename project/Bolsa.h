@@ -11,8 +11,12 @@
 class Bolsa
 {
 private:
-    //TODO: Na funcao de printDetalhado, ela deve zerar os atributos Dividendos e lucroOperacao, toda as vezes que for chamada (Todo Mes);
-    Bolsa() { nEventos = 0;}
+    Bolsa()
+    {
+        nEventos = 0;
+        tipoExecucao[0] = '0';
+        tipoExecucao[1] = '0';
+    }
 
     char tipoExecucao[2];
 
@@ -41,10 +45,11 @@ private:
     void adicionaSplitsAosEventos(unsigned int &nEventos);
     void adicionaDividendosAosEventos(unsigned int &nEventos);
     void adicionaImpressoesAosEventos(unsigned int &nEventos);
-    void simula(Evento &evento);
-    void simulaDividendos(Evento &evento);
-    void simulaSplits(Evento &evento);
-    void simulaOperacoes(Evento &evento);
+    void simula(const Evento &evento);
+    void simulaDividendos(const Evento &evento);
+    void simulaReinvestirDividendos(const Evento &Evento, const unsigned int &valorPago, const int &posAcao);
+    void simulaSplits(const Evento &evento);
+    void simulaOperacoes(const Evento &evento);
     void executaEventosM();
     void impressaoTipoM(Evento &evento);
 

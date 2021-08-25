@@ -1,4 +1,3 @@
-
 #include "Split.h"
 
 Split::Split(std::string ticker, std::string data, std::string indice)
@@ -24,6 +23,16 @@ Split::Split() : Dado()
 
 Split::~Split()
 {
+}
+
+unsigned int Split::getMultiplicador() const
+{
+    return multiplicador;
+}
+
+unsigned int Split::getDivisor() const
+{
+    return divisor;
 }
 
 unsigned int Split::realizaLeitura(std::ifstream &arquivoFonte, Split *arraySplit) const

@@ -1,4 +1,3 @@
-
 #include "Operacao.h"
 
 Operacao::Operacao(std::string ticker, std::string date, char tipoOp, unsigned int quantidade)
