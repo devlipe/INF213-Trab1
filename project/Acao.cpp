@@ -13,6 +13,18 @@ Acao::Acao()
     lucroOperacoesTotais = 0;
 }
 
+Acao::Acao(const std::string &ticker)
+{
+    this->ticker = ticker;
+    quantidadeAtual = 0;
+    custoTotal = 0;
+    custoMedio = 0;
+    dividendosMes = 0;
+    dividendosTotais = 0;
+    lucroOperacoesMes = 0;
+    lucroOperacoesTotais = 0;
+}
+
 Acao::~Acao()
 {
 }
@@ -82,12 +94,29 @@ void Acao::setDividendosMes(unsigned int dividendosM)
     dividendosMes = dividendosM;
 }
 
+void Acao::setDividendosTotais(unsigned int dividendosT)
+{
+    dividendosTotais = dividendosT;
+}
+
 void Acao::setOperacoesMes(int lucroOpM)
 {
     lucroOperacoesMes = lucroOpM;
 }
 
-void Acao::setOperacoesTotais(int &lucroOpT)
+void Acao::setOperacoesTotais(int lucroOpT)
 {
     lucroOperacoesTotais = lucroOpT;
+}
+
+void Acao::printInfo() const
+{
+    std::cout << "Ticker: " << ticker << std::endl;
+    std::cout << "Qunantidade Atual: " << quantidadeAtual << std::endl;
+    std::cout << "Custo Total: " << custoTotal << std::endl;
+    std::cout << "Custo Medio: " << custoMedio << std::endl;
+    std::cout << "Dividendos Mes: " << dividendosMes << std::endl;
+    std::cout << "Dividendos Totais: " << dividendosTotais << std::endl;
+    std::cout << "Lucro Operacoes Mes: " << lucroOperacoesMes << std::endl;
+    std::cout << "Lucro Operacoes Totais: " << lucroOperacoesTotais << std::endl;
 }

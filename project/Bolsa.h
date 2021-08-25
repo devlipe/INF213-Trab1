@@ -42,6 +42,9 @@ private:
     void adicionaDividendosAosEventos(unsigned int &nEventos);
     void adicionaImpressoesAosEventos(unsigned int &nEventos);
     void simula(Evento &evento);
+    void simulaDividendos(Evento &evento);
+    void simulaSplits(Evento &evento);
+    void simulaOperacoes(Evento &evento);
     void executaEventosM();
     void impressaoTipoM(Evento &evento);
 

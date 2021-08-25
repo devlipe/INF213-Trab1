@@ -28,38 +28,38 @@
 //     std::cout << a;
 // }
 
-void codeToGetTheData()
-{
-    std::string entrada;
+// void codeToGetTheData()
+// {
+//     std::string entrada;
 
-    std::getline(std::cin, entrada); // Pega a linha do arquivo
+//     std::getline(std::cin, entrada); // Pega a linha do arquivo
 
-    std::stringstream line;
-    line << entrada;
+//     std::stringstream line;
+//     line << entrada;
 
-    while (!line.eof())
-    {
-        std::string dadoDaClasse;
-        std::getline(line, dadoDaClasse, ',');
-    }
-    line.clear();
+//     while (!line.eof())
+//     {
+//         std::string dadoDaClasse;
+//         std::getline(line, dadoDaClasse, ',');
+//     }
+//     line.clear();
 
-    ///! Jeito do Salles
-    std::ifstream fin;
-    std::string linha;
-    while (std::getline(fin, linha))
-    {
-        std::stringstream ss;
-        ss << linha;
-        for (int i = 0; i < linha.size(); i++)
-            if (linha[i] == ',')
-                linha[i] == ' ';
-        ss << linha;
-        std::string ticker;
-        double p1, p2;
-        ss >> ticker >> p1 >> p2;
-    }
-}
+//     ///! Jeito do Salles
+//     std::ifstream fin;
+//     std::string linha;
+//     while (std::getline(fin, linha))
+//     {
+//         std::stringstream ss;
+//         ss << linha;
+//         for (int i = 0; i < linha.size(); i++)
+//             if (linha[i] == ',')
+//                 linha[i] == ' ';
+//         ss << linha;
+//         std::string ticker;
+//         double p1, p2;
+//         ss >> ticker >> p1 >> p2;
+//     }
+//}
 
 // void leLinha(std::string &linha, std::string *dados)
 // {
@@ -96,13 +96,58 @@ void codeToGetTheData()
 //     //     dados + 1;
 //     // }
 // }
+int nAcoes = 0;
+int acoes[110];
+void insert(const int &elem, const int pos)
+{
+    if (pos > 110 || pos < 0) //Limites do array de acoes
+    {
+        throw("Tentativa de inserir acao em posicao indevida");
+    }
 
+    for (int i = nAcoes; i > pos; i--)
+    {
+        acoes[i] = acoes[i - 1];
+    }
+    acoes[pos] = elem;
+    nAcoes++;
+}
+
+int insereAcaoAlfa(const int &elem)
+{
+    if (nAcoes > 0)
+    {
+        for (int i = 0; i < nAcoes; i++)
+        {
+            if (elem <= acoes[i])
+            {
+                insert(elem, i);
+                std::cout << "Numero de acoes:" << nAcoes << std::endl;
+                return i;
+            }
+        }
+    }
+    else
+    {
+        insert(elem, 0);
+        std::cout << "Numero de acoes:" << nAcoes << std::endl;
+        return 0;
+    }
+    insert(elem, nAcoes);
+    std::cout << "Numero de acoes:" << nAcoes << std::endl;
+    return nAcoes - 1;
+}
 int main()
 {
     int data = 20210824;
     while (true)
     {
         std::cin >> data;
-        std::cout << std::left << std::setw(50) << "Lucro total do mes:" << std::right << std::setw(15) << data << std::setw(15) << data << std::endl;
+        std::cout << insereAcaoAlfa(data) << " inserido nessa pos\n";
+        for (int i = 0; i < nAcoes; i++)
+        {
+            std::cout << acoes[i] << " ";
+        }
+        std::cout << "\n";
     }
 }

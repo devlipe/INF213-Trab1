@@ -15,7 +15,7 @@ Dividendo::~Dividendo()
 {
 }
 
-unsigned int Dividendo::getValorDividendo() const
+double Dividendo::getValorDividendo() const
 {
     return valorDividendo;
 }

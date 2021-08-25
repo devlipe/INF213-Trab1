@@ -16,8 +16,8 @@ public:
 
     //* Getters and Setters
 
-    ///Retorna o valor em centesimos de milesimos de reais que a empresa pagou em dividendos
-    unsigned int getValorDividendo() const;
+    ///Retorna o valor em reais (double) que a empresa pagou em dividendos
+    double getValorDividendo() const;
 
     //*Funcoes de uso do Programa
     ///Realiza a leitura de um arquivo de dividendos e os coloca em um vetor;

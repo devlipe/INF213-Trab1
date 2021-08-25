@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 class Acao
 {
@@ -18,6 +19,7 @@ public:
     //* Construtor e Destrutor
 
     Acao();
+    Acao(const std::string &ticker);
     ~Acao();
 
     //*Getters and Setters
@@ -36,9 +38,11 @@ public:
     void setCustoTotal(unsigned int &custoTot);
     void setCustoMedio(unsigned int &custoMed);
     void setDividendosMes(unsigned int divdendosM);
-    void setDividendosTotais(unsigned int &dividendosT);
+    void setDividendosTotais(unsigned int dividendosT);
     void setOperacoesMes(int lucroOpM);
-    void setOperacoesTotais(int &lucroOpT);
+    void setOperacoesTotais(int lucroOpT);
 
     //*Funcoes de uso do Programa
+
+    void printInfo() const ;
 };

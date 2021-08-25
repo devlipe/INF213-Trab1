@@ -26,6 +26,9 @@ public:
     unsigned int getDateInt() const;
     ///Retorna a data em um string na forma yyyy-mm-dd
     std::string getDateString() const;
+    //TODO: Implementar as excentricidades do Salles para saida da data
+    ///Funcao que retorna uma acao na forma yyyy-m-dd
+    std::string getDateStringSallistica() const;
     ///Retorna o ticker da empresa
     std::string getTicker() const;
     ///Retorna o mes de cada tipo de dado

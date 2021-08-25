@@ -1,3 +1,4 @@
+#pragma once
 #include "Evento.h"
 
 /// Functor utilizado para comparar objetos do tipo Dado de acordo com a data de cada um

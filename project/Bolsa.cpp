@@ -75,7 +75,6 @@ void Bolsa::leArquivos(const char **files)
 
 void Bolsa::printDataBaseImp() const
 {
-   
 
     std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
 
@@ -111,7 +110,7 @@ void Bolsa::printDataBaseImp() const
     }
     std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    std::cout <<"SAIDA EVENTOS"<< nEventos << std::endl;
+    std::cout << "SAIDA EVENTOS" << nEventos << std::endl;
 
     for (int i = 0; i < nEventos; i++)
     {
@@ -128,8 +127,7 @@ void Bolsa::printDataBase()
 void Bolsa::organizaDataBaseImp()
 {
     algoritmos::quickSortDadoDataCres(historicoCotacoes, nCotacoes);
-    //algoritmos::mergeSortDadoDataCres(historicoCotacoes, nCotacoes);
-
+    algoritmos::mergeSortDadoDataCres(listaOperacoes, nOperacoes); //Precisamos ordenar para saber a data da primeira compra
     ///algoritmos::quickSortDadoDataCres(historicoDividendos, nDividendos);
     //algoritmos::quickSortDadoDataCres(historicoSplits, nSplits);
 }
@@ -185,36 +183,78 @@ void Bolsa::adicionaImpressoesAosEventos(unsigned int &nEventos)
             nEventos++;
         }
     }
+    listaEventos[nEventos] = Evento(historicoCotacoes[nCotacoes - 1].getDateInt()); ///Adiciono a ultima data no vetor de eventos
+    nEventos++;
 }
 
 void Bolsa::montaVetorEventos()
-{   
+{
     adicionaDividendosAosEventos(nEventos);
 
     adicionaSplitsAosEventos(nEventos);
 
     adicionaOperacoesAosEventos(nEventos);
-    
+
     adicionaImpressoesAosEventos(nEventos);
 
     algoritmos::mergeSortDadoDataCres(listaEventos, nEventos);
-    
 }
 
 void Bolsa::impressaoTipoM(Evento &evento)
 {
-    std::cout << "Fechamento do mes (" << evento.getDateString() <<")\n";
-    std::cout << std::left << std::setw(50) <<"Lucro total do mes:" << std::right << std::setw(15) << carteira.getLucroDividendosMes()/100 << std::setw(15) << carteira.getLucroOperacoesMes()/100;
+    std::cout << "Fechamento do mes (" << evento.getMesInt() << ")\n";
+    std::cout << std::left << std::setw(50) << "Lucro total do mes:" << std::right << std::setw(15) << carteira.getLucroDividendosMes() / 100 << std::setw(15) << carteira.getLucroOperacoesMes() / 100 << std::endl;
 }
 
-void Bolsa::simula(Evento &evento)
+void Bolsa::simulaDividendos(Evento &evento)
 {
-    if ()
+    int posAcao = carteira.procuraAcao(evento.getTicker());
+    if (posAcao < 0)
     {
-        /* code */
+        return; /// Se nao tenho o acao do dividendo em questao, somente ignoro
+    }
+    ///Se eu tiver o dividendo em questao, eu executo
+    //TODO: parei aqui
+    carteira.executaDividendos(historicoDividendos[evento.getPosicaoVetor()], posAcao);
+}
+
+void Bolsa::simulaSplits(Evento &evento)
+{
+    int posAcao = carteira.procuraAcao(evento.getTicker());
+    if (posAcao < 0)
+    {
+        return; /// Se nao tenho o split da acao em questao, somente ignoro
     }
     
+}
 
+void Bolsa::simulaOperacoes(Evento &evento)
+{
+    int posAcao = carteira.procuraAcao(evento.getTicker());
+    if (posAcao < 0)
+    {
+        posAcao = carteira.insereAcaoAlfa(evento.getTicker()); /// Se nao possuo a acao, e se trata de uma compra, eu insiro no vetor de acoes
+    }
+}
+
+//TODO:Parei aqui (Implementacao da funcao simula para gerar os resultados necessarios)
+void Bolsa::simula(Evento &evento)
+{
+    if (evento.getTipoEvento() == 1) //Caso de dividendos
+    {
+        simulaDividendos(evento);
+        return;
+    }
+    if (evento.getTipoEvento() == 2) //Caso de splits
+    {
+        simulaSplits(evento);
+        return;
+    }
+    if (evento.getTipoEvento() == 3) //Caso de Operacoes
+    {
+        simulaOperacoes(evento);
+        return;
+    }
 }
 
 void Bolsa::executaEventosM()
@@ -223,21 +263,22 @@ void Bolsa::executaEventosM()
     {
         if (listaEventos[i].getTipoEvento() == 4)
         {
-            impressaoTipoM(listaEventos[i]);
+            if ((listaOperacoes[0].getDateInt()) < (listaEventos[i].getDateInt()))
+            {
+                impressaoTipoM(listaEventos[i]);
+            }
         }
-        else{
+        else
+        {
             simula(listaEventos[i]);
         }
-        
     }
-    
 }
 
 void Bolsa::executaComandoM()
 {
     montaVetorEventos();
     executaEventosM();
-    
 }
 
 void Bolsa::executaTrabalhoImp()

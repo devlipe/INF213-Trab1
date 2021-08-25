@@ -52,6 +52,13 @@ unsigned int Dado::getMesInt() const
     return mes;
 }
 
+std::string Dado::getDateStringSallistica() const
+{   
+    
+
+
+}
+
 void Dado::parsingLinha(std::string &linhaFonte, std::string *dados) const
 {
     std::stringstream line;
