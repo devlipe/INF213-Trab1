@@ -305,6 +305,68 @@ void Bolsa::executaComandoM()
     executaEventosM();
 }
 
+void Bolsa::executaEventosF()
+{
+    for (int i = 0; i < nEventos; i++)
+    {
+        if (listaEventos[i].getTipoEvento() < 4) /// Nao queremos eventos do tipo impressao, uma vez que o tipo F tem somente uma impressao no final
+        {
+            simula(listaEventos[i]);
+        }
+    }
+}
+
+void Bolsa::impressaoTipoF(Evento &evento)
+{
+    unsigned int data = evento.getDateInt();
+
+    std::cout << std::left << std::setw(29) << "Totais no final da simulacao:" << std::right
+              << std::setw(14) << carteira.getValorAtual(historicoCotacoes, data, nCotacoes) / 100
+              << std::setw(15) << carteira.getCustoTotal(data) / 100
+              << std::setw(15) << carteira.getValorizacao(historicoCotacoes, data, nCotacoes) / 100
+              << std::setw(15) << carteira.getLucroOperacoesTot(data) / 100
+              << std::setw(15) << carteira.getLucroDividendosTot(data) / 100
+              << std::setw(15) << carteira.getTotal(historicoCotacoes, data, nCotacoes) / 100
+              << std::endl
+              << std::endl;
+}
+
+void Bolsa::executaComandoF()
+{
+    montaVetorEventos();
+    executaEventosF();
+    impressaoTipoF(listaEventos[nEventos - 1]); //O ultimo evento e obrigatoriamente uma impressao, logo consigo chama-la para atualizar os dados;
+}
+
+void Bolsa::impressaoTipoD(Evento &Evento)
+{
+
+}
+
+void Bolsa::executaEventosD()
+{
+    for (int i = 0; i < nEventos; i++)
+    {
+        if (listaEventos[i].getTipoEvento() == 4) //Caso seja uma impressao
+        {
+            if ((listaOperacoes[0].getDateInt()) < (listaEventos[i].getDateInt())) // So iremos comecar a imprimir a partir da primeira data de compra
+            {
+                impressaoTipoD(listaEventos[i]);
+            }
+        }
+        else
+        {
+            simula(listaEventos[i]);
+        }
+    }
+}
+
+void Bolsa::executaComandoD()
+{
+    montaVetorEventos();
+    executaEventosD();
+}
+
 void Bolsa::executaTrabalhoImp()
 {
     switch (tipoExecucao[0])
@@ -316,10 +378,10 @@ void Bolsa::executaTrabalhoImp()
         executaComandoM();
         break;
     case 'F':
-        /* code */
+        executaComandoF();
         break;
     case 'D':
-        /* code */
+        executaComandoD();
         break;
     default:
         std::cerr << "Tipo de Execucao nao econtrado" << std::endl;

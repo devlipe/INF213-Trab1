@@ -78,7 +78,7 @@ unsigned int Carteira::getCustoTotal(const unsigned int &data)
 void Carteira::atualizaDividendosTotais(const unsigned int &data)
 {
     dataUltimaAttDivTot = data;
-    int dividendosTot = 0;
+    dividendosTot = 0;
     for (int i = 0; i < nAcoes; i++)
     {
         dividendosTot += acoes[i].getDividendosTotais();
@@ -124,10 +124,12 @@ int Carteira::getLucroDividendosMes(unsigned int &data)
 
 void Carteira::atualizaOperacoesTotais(const unsigned int &data)
 {
+    std::cout << "Atualizaou OP Total\n";
     dataUltimaAttOpTot = data;
-    int operacoesTot = 0;
+    operacoesTot = 0;
     for (int i = 0; i < nAcoes; i++)
     {
+
         operacoesTot += acoes[i].getOperacoesTotais();
     }
 }

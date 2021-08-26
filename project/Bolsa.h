@@ -40,6 +40,8 @@ private:
     void leOperacoes(const char *operacoesPath);
     void executaComandoQ() const;
     void executaComandoM();
+    void executaComandoF();
+    void executaComandoD();
     void montaVetorEventos();
     void adicionaOperacoesAosEventos(unsigned int &nEventos);
     void adicionaSplitsAosEventos(unsigned int &nEventos);
@@ -51,7 +53,11 @@ private:
     void simulaSplits(const Evento &evento);
     void simulaOperacoes(const Evento &evento);
     void executaEventosM();
+    void executaEventosF();
+    void executaEventosD();
     void impressaoTipoM(Evento &evento);
+    void impressaoTipoF(Evento &evento);
+    void impressaoTipoD(Evento &evento);
 
     //* Funcoes de uso do Programa
     void leArquivosImp(const char **files);

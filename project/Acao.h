@@ -35,6 +35,7 @@ public:
     int getOperacoesTotais() const;
     int getLucroTotalMes() const;
     int getLucroTotalGeral() const;
+    int getValorizacao() const;
 
     void setQuantidadeAtual(int quantidade);
     void setCustoTotal(unsigned int custoTot);

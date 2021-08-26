@@ -81,7 +81,12 @@ int Acao::getLucroTotalMes() const
 
 int Acao::getLucroTotalGeral() const
 {
-    return dividendosTotais + lucroOperacoesTotais;
+    return dividendosTotais + lucroOperacoesTotais + getValorizacao();
+}
+
+int Acao::getValorizacao() const
+{
+    return valorAtual - custoTotal;
 }
 
 void Acao::setQuantidadeAtual(int quantidade)
@@ -107,6 +112,7 @@ void Acao::setDividendosMes(unsigned int dividendosM)
 void Acao::setDividendosTotais(unsigned int dividendosT)
 {
     dividendosTotais = dividendosT;
+    std::cout << "Quantidade COlocada no div TOtal" << dividendosTotais << std::endl;
 }
 
 void Acao::setOperacoesMes(int lucroOpM)
