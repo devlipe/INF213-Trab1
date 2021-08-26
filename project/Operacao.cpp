@@ -27,9 +27,9 @@ unsigned int Operacao::getQuantOpe() const
     return quantidadeOperada;
 }
 
-unsigned int Operacao::realizaLeitura(std::ifstream &arquivoFonte, Operacao *arrayOperacao, char tipoExecucao[]) const
+unsigned int Operacao::realizaLeitura(std::ifstream &arquivoFonte, Operacao *arrayOperacao, std::string &tipoExecucao) const
 {
-    arquivoFonte.getline(tipoExecucao, 2);
+    std::getline(arquivoFonte, tipoExecucao);
     std::string linha;
     std::string dados[10] = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
 
@@ -41,6 +41,11 @@ unsigned int Operacao::realizaLeitura(std::ifstream &arquivoFonte, Operacao *arr
         i++;
     }
     return i;
+}
+
+void Operacao::setQuantidadeOperada(unsigned int quantOp)
+{
+    quantidadeOperada = quantOp;
 }
 
 void Operacao::printInfo() const

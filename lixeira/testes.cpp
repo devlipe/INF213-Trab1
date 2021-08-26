@@ -174,21 +174,40 @@ int insereAcaoAlfa(const int &elem)
 }
 int main()
 {
-    int data = 20210824;
-    // while (true)
-    // {
-    //     std::cin >> data;
-    //     std::cout << insereAcao(data) << " inserido nessa pos\n";
-    //     for (int i = 0; i < 200; i++)
-    //     {
-    //         std::cout << acoes[i] << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
-    std::string v[10];
+    // int data = 20210824;
+    // // while (true)
+    // // {
+    // //     std::cin >> data;
+    // //     std::cout << insereAcao(data) << " inserido nessa pos\n";
+    // //     for (int i = 0; i < 200; i++)
+    // //     {
+    // //         std::cout << acoes[i] << " ";
+    // //     }
+    // //     std::cout << "\n";
+    // // }
+    // std::string v[10];
 
-    for (int i = 0; i < 150; i++)
-    {
-        std::cout << v[i] << std::endl;
-    }
+    // for (int i = 0; i < 150; i++)
+    // {
+    //     std::cout << v[i] << std::endl;
+    // }
+
+
+    char palavra[2];
+    palavra[0] = '0';
+    palavra[1] = '0';
+
+    std::cin>> palavra;
+
+   if (palavra[0] == 'D')
+   {
+       std::cout << "METODO D";
+   }
+   
+   if (palavra[1] == 'R')
+   {
+       std::cout << "REINVISTA!!";
+   }
+   
+    
 }

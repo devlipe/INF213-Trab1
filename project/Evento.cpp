@@ -2,8 +2,8 @@
 
 Evento::Evento() : Dado()
 {
-    //Criamos um evento com tipo 5, por se tratar de um tipo invalido, e maior que os demais, logo sempre ficaria no final no caso de uma ordenacao com tal parametro
-    tipoEvento = 5;
+    //Criamos um evento com tipo 6, por se tratar de um tipo invalido, e maior que os demais, logo sempre ficaria no final no caso de uma ordenacao com tal parametro
+    tipoEvento = 6;
     posicaoVetor = 0;
 }
 
@@ -13,6 +13,14 @@ Evento::Evento(const Dividendo &div, const unsigned int &pVetor)
 {
     tipoEvento = 1;
     posicaoVetor = pVetor;
+}
+
+Evento::Evento(const Dividendo &div)
+    : Dado(div.getTicker(), div.getDateInt())
+
+{
+    tipoEvento = 4;
+    posicaoVetor = 0;
 }
 
 Evento::Evento(const Split &split, const unsigned int &pVetor)
@@ -35,7 +43,7 @@ Evento::Evento(const unsigned int &data)
     : Dado("IMPR3", data)
 
 {
-    tipoEvento = 4;
+    tipoEvento = 5;
     posicaoVetor = 0;
 }
 
@@ -56,6 +64,11 @@ unsigned int Evento::getPosicaoVetor() const
 void Evento::printInfo() const
 {
     Dado::printInfo();
-    std::cout << "Tipo de evento {1:Dividendo, 2:Split, 3:Operacao, 4:Impressao}: " << tipoEvento << std::endl;
+    std::string tipo = (tipoEvento == 1) ? "Dividendo 1" : (tipoEvento == 2) ? "Split 2"
+                                                       : (tipoEvento == 3)   ? "Operacao 3"
+                                                       : (tipoEvento == 4)   ? "Reinvestir 4"
+                                                       : (tipoEvento == 5)   ? "Impressao 5"
+                                                                             : "evento sem tipo";
+    std::cout << "Tipo de evento: " << tipo << std::endl;
     std::cout << "Posicao no Vetor: " << posicaoVetor << std::endl;
 }

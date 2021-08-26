@@ -89,13 +89,22 @@ public:
     }
 };
 
-//Functor para comparar os tipos de evento do menor para o maior (Dividendo, Split, Operacao, Impressao) nessa Ordem
+//Functor para comparar os tipos de evento em ordem cronologica do menor para o maior (Dividendo, Split, Operacao,Reinvestir, Impressao) nessa Ordem
 class FunctorCompEventoTipoMenor
 {
 public:
     bool operator()(const Evento &dado1, const Evento &dado2) const
     {
-        return dado1.getTipoEvento() <= dado2.getTipoEvento();
+        if (dado1.getDateInt() < dado2.getDateInt())
+        {
+            return true;
+        }
+        if (dado1.getDateInt() == dado2.getDateInt() && dado1.getTipoEvento() < dado2.getTipoEvento())
+        {
+            return true;
+        }
+
+        return false;
     }
 };
 

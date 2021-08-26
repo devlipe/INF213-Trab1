@@ -18,7 +18,7 @@ private:
         tipoExecucao[1] = '0';
     }
 
-    char tipoExecucao[2];
+    std::string tipoExecucao;
 
     Cotacao historicoCotacoes[500000];
     unsigned int nCotacoes;
@@ -28,7 +28,7 @@ private:
     unsigned int nOperacoes;
     Split historicoSplits[500000];
     unsigned int nSplits;
-    Evento listaEventos[1500720]; /// Colocamos o as quantidades maximas (Operacoes + Splits + Dividendos + 60 anos em meses (Espaco para Eventos de Impressao))
+    Evento listaEventos[2000720]; /// Colocamos o as quantidades maximas (Operacoes + Splits + Dividendos + 60 anos em meses (Espaco para Eventos de Impressao))
     unsigned int nEventos;
     Carteira carteira;
 
@@ -49,7 +49,8 @@ private:
     void adicionaImpressoesAosEventos(unsigned int &nEventos);
     void simula(const Evento &evento);
     void simulaDividendos(const Evento &evento);
-    void simulaReinvestirDividendos(const Evento &Evento, const unsigned int &valorPago, const int &posAcao);
+    void simulaReinvestirDividendos();
+    void adicionaDividendosParaReinvestir(const unsigned int &valorPago, const Evento &evento);
     void simulaSplits(const Evento &evento);
     void simulaOperacoes(const Evento &evento);
     void executaEventosM();
@@ -58,6 +59,8 @@ private:
     void impressaoTipoM(Evento &evento);
     void impressaoTipoF(Evento &evento);
     void impressaoTipoD(Evento &evento);
+    void impressaoTipoDTabela1(Evento &evento, unsigned int &data);
+    void impressaoTipoDTabela2(Evento &evento, unsigned int &data);
 
     //* Funcoes de uso do Programa
     void leArquivosImp(const char **files);

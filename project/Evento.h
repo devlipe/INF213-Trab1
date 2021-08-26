@@ -8,7 +8,7 @@
 class Evento : public Dado
 {
 private:
-    //Recebe o tipo de cada Evento sendo {1:Dividendo, 2:Split, 3:Operacao, 4:Impressao}
+    //Recebe o tipo de cada Evento sendo {1:Dividendo, 2:Split, 3:Operacao, 4:Reinvestir, 5:Impressao}
     unsigned int tipoEvento;
     //Indica a posicao no vetor de origem de cada evento, ira agilizar o acesso as informacoes
     //Por exemplo, uma cotacao estara em historicoCotacoes[posicaoVetor]
@@ -22,6 +22,8 @@ public:
     Evento();
     ///Construtor que cria um evento com base em um dividendo
     Evento(const Dividendo &div, const unsigned int &pVetor);
+    ///Construtor que cria um evento para reinvestir os dividendos caso seja necessario
+    Evento(const Dividendo &div);
     ///Construtor que cria um eventeo com base em um split
     Evento(const Split &split, const unsigned int &pVetor);
     ///Construtor que cria um eventeo com base em uma operacao
@@ -32,7 +34,7 @@ public:
 
     //* Getters and Setters
 
-    ///Retona o tipo de cada evento como unsigned int sendo {1:Dividendo, 2:Split, 3:Operacao, 4:Impressao}
+    ///Retona o tipo de cada evento como unsigned int sendo {1:Dividendo, 2:Split, 3:Operacao, 4:Reinvestir, 5:Impressao}
     unsigned int getTipoEvento() const;
     ///Retorna a posicao no vetor original de cada evento  //Por exemplo, uma cotacao estara em historicoCotacoes[posicaoVetor]
     unsigned int getPosicaoVetor() const;

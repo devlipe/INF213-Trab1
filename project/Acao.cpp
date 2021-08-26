@@ -5,6 +5,7 @@ Acao::Acao()
 {
     ticker = "";
     quantidadeAtual = 0;
+    valorAtual = 0;
     custoTotal = 0;
     custoMedio = 0;
     dividendosMes = 0;
@@ -17,6 +18,7 @@ Acao::Acao(const std::string &ticker)
 {
     this->ticker = ticker;
     quantidadeAtual = 0;
+    valorAtual = 0;
     custoTotal = 0;
     custoMedio = 0;
     dividendosMes = 0;
@@ -44,12 +46,17 @@ int Acao::getQuantidadeAtual() const
     return quantidadeAtual;
 }
 
+unsigned int Acao::getValorAtual() const
+{
+    return valorAtual;
+}
+
 unsigned int Acao::getCustoTotal() const
 {
     return custoTotal;
 }
 
-unsigned int Acao::getCustoMedio() const
+double  Acao::getCustoMedio() const
 {
     return custoMedio;
 }
@@ -99,7 +106,7 @@ void Acao::setCustoTotal(unsigned int custoTot)
     custoTotal = custoTot;
 }
 
-void Acao::setCustoMedio(unsigned int custoMed)
+void Acao::setCustoMedio(double custoMed)
 {
     custoMedio = custoMed;
 }
@@ -112,7 +119,6 @@ void Acao::setDividendosMes(unsigned int dividendosM)
 void Acao::setDividendosTotais(unsigned int dividendosT)
 {
     dividendosTotais = dividendosT;
-    std::cout << "Quantidade COlocada no div TOtal" << dividendosTotais << std::endl;
 }
 
 void Acao::setOperacoesMes(int lucroOpM)

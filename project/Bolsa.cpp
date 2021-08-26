@@ -78,46 +78,46 @@ void Bolsa::printDataBaseImp() const
 
     std::cout << "Tipo de Execucao: " << tipoExecucao << "\n\n";
 
-    // std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
-    // for (int i = 0; i < nCotacoes; i++)
-    // {
-    //     historicoCotacoes[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+    std::cout << "SAIDA COTACOES " << nCotacoes << "\n\n";
+    for (int i = 0; i < nCotacoes; i++)
+    {
+        historicoCotacoes[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    // std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
-    // for (int i = 0; i < nDividendos; i++)
-    // {
-    //     historicoDividendos[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+    std::cout << "SAIDA DIVIDENDOS " << nDividendos << "\n\n";
+    for (int i = 0; i < nDividendos; i++)
+    {
+        historicoDividendos[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    // std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
-    // for (int i = 0; i < nOperacoes; i++)
-    // {
-    //     listaOperacoes[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+    std::cout << "SAIDA OPERACOES " << nOperacoes << "\n\n";
+    for (int i = 0; i < nOperacoes; i++)
+    {
+        listaOperacoes[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    // std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
-    // for (int i = 0; i < nSplits; i++)
-    // {
-    //     historicoSplits[i].printInfo();
-    //     std::cout << "\n";
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+    std::cout << "SAIDA SPLIT " << nSplits << "\n\n";
+    for (int i = 0; i < nSplits; i++)
+    {
+        historicoSplits[i].printInfo();
+        std::cout << "\n";
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
-    // std::cout << "SAIDA EVENTOS" << nEventos << std::endl;
+    std::cout << "SAIDA EVENTOS" << nEventos << std::endl;
 
-    // for (int i = 0; i < nEventos; i++)
-    // {
-    //     listaEventos[i].printInfo();
-    //     std::cout << std::endl;
-    // }
-    // std::cout << std::setfill('=') << std::setw(30) << "\n";
+    for (int i = 0; i < nEventos; i++)
+    {
+        listaEventos[i].printInfo();
+        std::cout << std::endl;
+    }
+    std::cout << std::setfill('=') << std::setw(30) << "\n";
 
     std::cout << "SAIDA ACOES COMPRADAS " << carteira.getNumAcao() << std::endl;
 
@@ -136,9 +136,6 @@ void Bolsa::printDataBase()
 void Bolsa::organizaDataBaseImp()
 {
     algoritmos::quickSortDadoDataCres(historicoCotacoes, nCotacoes);
-    algoritmos::mergeSortDadoDataCres(listaOperacoes, nOperacoes); //Precisamos ordenar para saber a data da primeira compra
-    ///algoritmos::quickSortDadoDataCres(historicoDividendos, nDividendos);
-    //algoritmos::quickSortDadoDataCres(historicoSplits, nSplits);
 }
 
 void Bolsa::organizaDataBase()
@@ -179,6 +176,11 @@ void Bolsa::adicionaDividendosAosEventos(unsigned int &nEventos)
     {
         listaEventos[nEventos] = Evento(historicoDividendos[i], i);
         nEventos++;
+        if (tipoExecucao[1] == 'R') /// Caso tenhamos que reinvestir os dividendos, adicionaremos os eventos de reinvestir
+        {
+            listaEventos[nEventos] = Evento(historicoDividendos[i]);
+            nEventos++;
+        }
     }
 }
 
@@ -198,6 +200,8 @@ void Bolsa::adicionaImpressoesAosEventos(unsigned int &nEventos)
 
 void Bolsa::montaVetorEventos()
 {
+    algoritmos::mergeSortDadoDataCres(listaOperacoes, nOperacoes); //Precisamos ordenar para saber a data da primeira compra
+
     adicionaDividendosAosEventos(nEventos);
 
     adicionaSplitsAosEventos(nEventos);
@@ -206,7 +210,7 @@ void Bolsa::montaVetorEventos()
 
     adicionaImpressoesAosEventos(nEventos);
 
-    algoritmos::mergeSortDadoDataCres(listaEventos, nEventos);
+    algoritmos::mergeSortEventoTipo(listaEventos, nEventos);
 }
 
 void Bolsa::impressaoTipoM(Evento &evento)
@@ -216,13 +220,19 @@ void Bolsa::impressaoTipoM(Evento &evento)
     std::cout << std::left << std::setw(50) << "Lucro total do mes:" << std::right << std::setw(15) << carteira.getLucroDividendosMes(data) / 100 << std::setw(15) << carteira.getLucroOperacoesMes(data) / 100 << std::endl;
 }
 
-void Bolsa::simulaReinvestirDividendos(const Evento &evento, const unsigned int &valorPago, const int &posAcao)
+void Bolsa::simulaReinvestirDividendos()
 {
-    unsigned int quantidadeCompra = valorPago / historicoCotacoes[algoritmos::buscaBinariaDadoDataNome(historicoCotacoes, evento, nCotacoes)].getPrecoDoDia();
+    if (!carteira.TenhoDividendosParaReinvestir())
+    {
+        return;
+    }
+    carteira.executaReinvestimentoDeDividendos(historicoCotacoes, nCotacoes);
+}
 
-    Operacao opReinvestir(evento.getTicker(), evento.getDateString(), 'C', quantidadeCompra);
-
-    carteira.executaOperacoes(opReinvestir, posAcao, historicoCotacoes, nCotacoes);
+void Bolsa::adicionaDividendosParaReinvestir(const unsigned int &valorPago, const Evento &evento)
+{
+    Operacao opReinvestir(evento.getTicker(), evento.getDateString(), 'C', valorPago);
+    carteira.insereOperacaoReinvestir(opReinvestir);
 }
 
 void Bolsa::simulaDividendos(const Evento &evento)
@@ -237,7 +247,7 @@ void Bolsa::simulaDividendos(const Evento &evento)
 
     if (tipoExecucao[1] == 'R') /// Pergunta se e necessario reinvestir os dividendos
     {
-        simulaReinvestirDividendos(evento, divPagos, posAcao);
+        adicionaDividendosParaReinvestir(divPagos, evento);
     }
 }
 
@@ -272,12 +282,14 @@ void Bolsa::simula(const Evento &evento)
     if (evento.getTipoEvento() == 2) //Caso de splits
     {
         simulaSplits(evento);
-        return;
     }
     if (evento.getTipoEvento() == 3) //Caso de Operacoes
     {
         simulaOperacoes(evento);
-        return;
+    }
+    if (evento.getTipoEvento() == 4) ///Reinvestir dividendos
+    {
+        simulaReinvestirDividendos();
     }
 }
 
@@ -285,7 +297,7 @@ void Bolsa::executaEventosM()
 {
     for (int i = 0; i < nEventos; i++)
     {
-        if (listaEventos[i].getTipoEvento() == 4) //Caso seja uma impressao
+        if (listaEventos[i].getTipoEvento() == 5) //Caso seja uma impressao
         {
             if ((listaOperacoes[0].getDateInt()) < (listaEventos[i].getDateInt()))
             {
@@ -309,7 +321,7 @@ void Bolsa::executaEventosF()
 {
     for (int i = 0; i < nEventos; i++)
     {
-        if (listaEventos[i].getTipoEvento() < 4) /// Nao queremos eventos do tipo impressao, uma vez que o tipo F tem somente uma impressao no final
+        if (listaEventos[i].getTipoEvento() < 5) /// Nao queremos eventos do tipo impressao, uma vez que o tipo F tem somente uma impressao no final
         {
             simula(listaEventos[i]);
         }
@@ -338,16 +350,88 @@ void Bolsa::executaComandoF()
     impressaoTipoF(listaEventos[nEventos - 1]); //O ultimo evento e obrigatoriamente uma impressao, logo consigo chama-la para atualizar os dados;
 }
 
-void Bolsa::impressaoTipoD(Evento &Evento)
+void Bolsa::impressaoTipoDTabela1(Evento &evento, unsigned int &data)
 {
+    std::cout << std::string(110, '+') << std::endl
+              << std::endl;
 
+    std::cout << "Fechamento do mes (" << evento.getDateStringSallistica() << ")" << std::endl;
+
+    std::cout << std::string(80, '-') << std::endl;
+
+    std::cout << "Acao      Quantidade    Valor Atual    Custo Total     Dividendos      Operacoes" << std::endl;
+
+    for (int i = 0; i < carteira.getNumAcao(); i++)
+    {
+        std::cout << std::left << std::setw(6) << carteira.getAcao(i).getTicker()
+                  << std::right << std::setw(14) << carteira.getAcao(i).getQuantidadeAtual()
+                  << std::setw(15) << carteira.getAcao(i).getValorAtual() / 100
+                  << std::setw(15) << carteira.getAcao(i).getCustoTotal() / 100
+                  << std::setw(15) << carteira.getAcao(i).getDividendosMes() / 100
+                  << std::setw(15) << carteira.getAcao(i).getOperacoesMes() / 100
+                  << std::endl;
+    }
+
+    std::cout << std::string(80, '-') << std::endl;
+    std::cout << std::left
+              << std::setw(50) << "Lucro total do mes:"
+              << std::right
+              << std::setw(15) << carteira.getLucroDividendosMes(data) / 100
+              << std::setw(15) << carteira.getLucroOperacoesMes(data) / 100
+              << std::endl
+              << std::endl;
+}
+
+void Bolsa::impressaoTipoDTabela2(Evento &evento, unsigned int &data)
+{
+    std::cout << "Totais ate hoje:\n";
+    std::cout << std::string(110, '-') << std::endl;
+    std::cout << "Acao      Quantidade    Valor Atual    Custo Total    Valorizacao      Operacoes     Dividendos          Total" << std::endl;
+    for (int i = 0; i < carteira.getNumAcao(); i++)
+    {
+        std::cout << std::left << std::setw(6) << carteira.getAcao(i).getTicker()
+                  << std::right << std::setw(14) << carteira.getAcao(i).getQuantidadeAtual()
+                  << std::setw(15) << carteira.getAcao(i).getValorAtual() / 100
+                  << std::setw(15) << carteira.getAcao(i).getCustoTotal() / 100
+                  << std::setw(15) << carteira.getAcao(i).getValorizacao() / 100
+                  << std::setw(15) << carteira.getAcao(i).getOperacoesTotais() / 100
+                  << std::setw(15) << carteira.getAcao(i).getDividendosTotais() / 100
+                  << std::setw(15) << carteira.getAcao(i).getLucroTotalGeral() / 100
+                  << std::endl;
+    }
+    std::cout << std::string(110, '-') << std::endl;
+    std::cout << std::left
+              << std::setw(21) << "Totais ate o momento:"
+              << std::right
+              << std::setw(14) << carteira.getValorAtual(historicoCotacoes, data, nCotacoes) / 100
+              << std::setw(15) << carteira.getCustoTotal(data) / 100
+              << std::setw(15) << carteira.getValorizacao(historicoCotacoes, data, nCotacoes) / 100
+              << std::setw(15) << carteira.getLucroOperacoesTot(data) / 100
+              << std::setw(15) << carteira.getLucroDividendosTot(data) / 100
+              << std::setw(15) << carteira.getTotal(historicoCotacoes, data, nCotacoes) / 100
+              << std::endl
+              << std::endl;
+}
+
+void Bolsa::impressaoTipoD(Evento &evento)
+{
+    /// Funcoes que devem ser chamadas para a correta saida do metodo D
+    unsigned int data = evento.getDateInt();
+    carteira.atualizaValorAtual(historicoCotacoes, data, nCotacoes);
+    //Ordeno para saida da primeira tabela
+    carteira.ordenaVetorAcoesMes();
+    impressaoTipoDTabela1(evento, data);
+
+    //Ordeno para saida da segunda tabela
+    carteira.ordenaVetorAcoesGeral();
+    impressaoTipoDTabela2(evento, data);
 }
 
 void Bolsa::executaEventosD()
 {
     for (int i = 0; i < nEventos; i++)
     {
-        if (listaEventos[i].getTipoEvento() == 4) //Caso seja uma impressao
+        if (listaEventos[i].getTipoEvento() == 5) //Caso seja uma impressao
         {
             if ((listaOperacoes[0].getDateInt()) < (listaEventos[i].getDateInt())) // So iremos comecar a imprimir a partir da primeira data de compra
             {

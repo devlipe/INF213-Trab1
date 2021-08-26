@@ -22,14 +22,21 @@ private:
     unsigned int dividendosTot;
     unsigned int dataUltimaAttDivTot;
 
+    ///Variaveis para reinvestir dividendos
+    Operacao operacoesParaReinvestir[50]; /// Nesse caso, a quantidade operada guarda o valor (centavos) a ser reinvestido pelo dividendo
+    unsigned int nOperacoesReinvestir;
+    bool tenhoDividendosParaReinvestir;
+
     //* Funcoes de uso privado da classe
     void executaCompra(const Operacao &op, const int &posAcao, const Cotacao *listaCotacao, const unsigned int &tamVetor);
+    void executaCompra(const Operacao &op, const int &posAcao, const unsigned int &preco);
     void executaVendas(const Operacao &op, const int &posAcao, const Cotacao *listaCotacao, const unsigned int &tamVetor);
     void atualizaCustoTotal(const unsigned int &data);
     void atualizaDividendosTotais(const unsigned int &data);
     void atualizaDividendosMensal(const unsigned int &data);
     void atualizaOperacoesTotais(const unsigned int &data);
     void atualizaOperacoesMensais(const unsigned int &data);
+    int procuraOperacaoReinvestir(const std::string ticker);
 
 public:
     //* Construtor e Destrutor
@@ -58,6 +65,10 @@ public:
     int getValorizacao(Cotacao *listaCotacao, unsigned int &data, unsigned int &tamVetor);
     ///Funcao que retorna o total da carteira em um determinado momento
     int getTotal(Cotacao *listaCotacao, unsigned int &data, unsigned int &tamVetor);
+    ///Funcao que retorna se possuo ou nao dividendos a serem reinvestidos
+    bool TenhoDividendosParaReinvestir() const;
+    /// Retorna a quantidade de dividendos que temos que reinvestir 
+    unsigned int getNumDividendos() const;
 
     //* Funcoes de uso do Programa
 
@@ -65,6 +76,8 @@ public:
     int procuraAcao(const std::string &ticker) const;
     ///Funacao que insere no vetor de acoes uma outra acao // retorna a posicao inserida
     int insereAcao(const std::string &ticker);
+    ///Funcao que proucura se possuo determinado (aumenta o valor, caso possuo), e insere o dividendo na lista de reinvestimento 
+    void insereOperacaoReinvestir(const Operacao &op);
     ///Funcao para executar os dividendos, ira pegar o valor e somar a acao que recebeu os dividendos
     unsigned int executaDividendos(const Dividendo &div, const int &posAcao);
     ///Funcao par executar os splits, ira pegar o rate dos splits e executar na acao referente
@@ -77,4 +90,6 @@ public:
     void ordenaVetorAcoesGeral();
     ///Metodo para atualizar os valores das acoes
     void atualizaValorAtual(Cotacao *listaCotacao, unsigned int &data, unsigned int &tamVetor);
+    /// Metodo para reinvestir dividendos no final do mes
+    void executaReinvestimentoDeDividendos(Cotacao * listaCotacao, const unsigned int &tamVetor);
 };

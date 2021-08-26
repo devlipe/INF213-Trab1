@@ -10,7 +10,7 @@ private:
     int quantidadeAtual;
     unsigned int valorAtual;
     unsigned int custoTotal;
-    unsigned int custoMedio;
+    double custoMedio;
     unsigned int dividendosMes;
     unsigned int dividendosTotais;
     int lucroOperacoesMes;
@@ -27,8 +27,9 @@ public:
 
     std::string getTicker() const;
     int getQuantidadeAtual() const;
+    unsigned int getValorAtual() const;
     unsigned int getCustoTotal() const;
-    unsigned int getCustoMedio() const;
+    double  getCustoMedio() const;
     unsigned int getDividendosMes() const;
     unsigned int getDividendosTotais() const;
     int getOperacoesMes() const;
@@ -39,7 +40,7 @@ public:
 
     void setQuantidadeAtual(int quantidade);
     void setCustoTotal(unsigned int custoTot);
-    void setCustoMedio(unsigned int custoMed);
+    void setCustoMedio(double custoMed);
     void setDividendosMes(unsigned int divdendosM);
     void setDividendosTotais(unsigned int dividendosT);
     void setOperacoesMes(int lucroOpM);
