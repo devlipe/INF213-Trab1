@@ -3,3 +3,5 @@ exemplos/
 lixeira/
 
 *.pdf
+*.out
+*.exe
